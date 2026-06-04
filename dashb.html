@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./dashb.css">
+</head>
+<body>
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <div class="logo">SIAMS</div>
+
+      <nav>
+        <a href="#">Dashboard</a>
+        <a href="#">Vehicles</a>
+        <a href="#">Access Requests</a>
+        <a href="#">Security Alerts</a>
+        <a href="#">Analytics</a>
+        <a href="#">Architecture</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+
+      <header class="topbar">
+        <input type="text" placeholder="Search vehicle..." />
+
+        <div class="topbar-actions">
+          <button>Notifications</button>
+          <button>Dark Mode</button>
+          <button>Admin</button>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+
+        <div class="stat-card">
+          <h3>Connected Vehicles</h3>
+          <p>1,248</p>
+        </div>
+
+        <div class="stat-card success">
+          <h3>Authenticated</h3>
+          <p>1,192</p>
+        </div>
+
+        <div class="stat-card danger">
+          <h3>Denied Access</h3>
+          <p>56</p>
+        </div>
+
+        <div class="stat-card warning">
+          <h3>Security Alerts</h3>
+          <p>12</p>
+        </div>
+
+      </section>
+
+      <section class="dashboard-grid">
+
+        <div class="live-activity card">
+          <h2>Live Activity</h2>
+        </div>
+
+        <div class="vehicle-map card">
+          <h2>Vehicle Map</h2>
+        </div>
+
+        <div class="analytics card">
+          <h2>Analytics</h2>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+</body>
+</html>
