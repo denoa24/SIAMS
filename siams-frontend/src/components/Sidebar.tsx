@@ -35,6 +35,10 @@ export function Sidebar() {
         <NavLink to="/architecture" className="nav-button">
           Architecture
         </NavLink>
+
+        <NavLink to="/live-map" className="nav-button">
+          Live Map
+        </NavLink>
       </nav>
 
       <div className="system-status">

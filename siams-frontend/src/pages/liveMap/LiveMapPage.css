@@ -1,0 +1,73 @@
+.live-map-page {
+  color: #f8fafc;
+}
+
+.map-layout {
+  display: grid;
+  grid-template-columns: 2fr 320px;
+  gap: 24px;
+}
+
+.map-card,
+.map-legend-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 24px;
+  padding: 20px;
+}
+
+.siams-map {
+  height: 650px;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.vehicle-marker-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+.map-legend-card h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: #cbd5e1;
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.legend-dot.authenticated {
+  background: #22c55e;
+}
+
+.legend-dot.denied {
+  background: #ef4444;
+}
+
+.legend-dot.pending {
+  background: #f59e0b;
+}
+
+@media (max-width: 1000px) {
+  .map-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .siams-map {
+    height: 500px;
+  }
+}

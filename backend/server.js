@@ -240,6 +240,8 @@ app.post('/api/vehicles', (req, res) => {
     rsu,
     lastSeen: new Date().toLocaleTimeString('en-GB'),
     certificate,
+    lat: 44.40 + Math.random() * 0.1,
+    lng: 26.05 + Math.random() * 0.1
   };
 
   vehicles = [newVehicle, ...vehicles];

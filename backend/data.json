@@ -1,25 +1,94 @@
 {
   "vehicles": [
     {
-      "id": "VH-1024",
+      "id": "VH-2407",
       "status": "Authenticated",
-      "speed": 48,
+      "speed": 57,
       "location": "Bucharest - Sector 1",
       "rsu": "RSU-04",
-      "lastSeen": "14:32:12",
-      "certificate": "Valid"
+      "lastSeen": "15:12:08",
+      "certificate": "Valid",
+      "lat": 44.4595,
+      "lng": 26.0893
     },
     {
-      "id": "VH-2201",
+      "id": "VH-3815",
+      "status": "Pending",
+      "speed": 24,
+      "location": "Bucharest - Sector 2",
+      "rsu": "RSU-02",
+      "lastSeen": "15:14:22",
+      "certificate": "Valid",
+      "lat": 44.4527,
+      "lng": 26.1381
+    },
+    {
+      "id": "VH-4928",
       "status": "Denied",
-      "speed": 35,
+      "speed": 0,
       "location": "Bucharest - Sector 3",
       "rsu": "RSU-11",
-      "lastSeen": "14:31:04",
-      "certificate": "Expired"
+      "lastSeen": "15:16:41",
+      "certificate": "Expired",
+      "lat": 44.4231,
+      "lng": 26.1685
+    },
+    {
+      "id": "VH-5732",
+      "status": "Authenticated",
+      "speed": 69,
+      "location": "Bucharest - Sector 6",
+      "rsu": "RSU-04",
+      "lastSeen": "15:18:09",
+      "certificate": "Valid",
+      "lat": 44.4388,
+      "lng": 26.0412
+    },
+    {
+      "id": "VH-6844",
+      "status": "Pending",
+      "speed": 31,
+      "location": "Bucharest - Sector 5",
+      "rsu": "RSU-09",
+      "lastSeen": "15:19:55",
+      "certificate": "Valid",
+      "lat": 44.4017,
+      "lng": 26.0826
     }
   ],
   "accessRequests": [
+    {
+      "id": 13,
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "timestamp": "18:02:21",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 12,
+      "vehicleId": "VH-2407",
+      "rsuId": "RSU-04",
+      "timestamp": "18:02:18",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 11,
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "18:01:54",
+      "status": "Pending",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 10,
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "timestamp": "18:01:51",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
     {
       "id": 9,
       "vehicleId": "VH-2201",
@@ -94,6 +163,24 @@
     }
   ],
   "securityAlerts": [
+    {
+      "id": 5,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "severity": "Critical",
+      "timestamp": "18:02:21",
+      "description": "Vehicle VH-4928 was denied access due to: Expired certificate."
+    },
+    {
+      "id": 4,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "severity": "Critical",
+      "timestamp": "18:01:51",
+      "description": "Vehicle VH-4928 was denied access due to: Expired certificate."
+    },
     {
       "id": 3,
       "title": "Unauthorized Access Attempt",

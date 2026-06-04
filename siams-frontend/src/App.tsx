@@ -5,6 +5,7 @@ import { AccessRequestsPage } from './pages/accessRequests/AccessRequestsPage';
 import { SecurityAlertsPage } from './pages/securityAlerts/SecurityAlertsPage';
 import { AnalyticsPage } from './pages/analytics/AnalyticsPage';
 import { ArchitecturePage } from './pages/architecture/ArchitecturePage';
+import { LiveMapPage } from './pages/liveMap/LiveMapPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/security-alerts" element={<SecurityAlertsPage />} />
       <Route path="/analytics" element={<AnalyticsPage />} />
       <Route path="/architecture" element={<ArchitecturePage />} />
+      <Route path="/live-map" element={<LiveMapPage />} />
     </Routes>
   );
 }
