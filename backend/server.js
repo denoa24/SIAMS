@@ -98,7 +98,29 @@ app.get('/api/access-requests', (req, res) => {
 });
 
 app.get('/api/security-alerts', (req, res) => {
-  res.json(securityAlerts);
+  const { search, severity, rsu } = req.query;
+
+  let filteredAlerts = securityAlerts;
+
+  if (search) {
+    filteredAlerts = filteredAlerts.filter((alert) =>
+      alert.vehicleId.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  if (severity) {
+    filteredAlerts = filteredAlerts.filter(
+      (alert) => alert.severity === severity
+    );
+  }
+
+  if (rsu) {
+    filteredAlerts = filteredAlerts.filter(
+      (alert) => alert.rsuId === rsu
+    );
+  }
+
+  res.json(filteredAlerts);
 });
 
 app.get('/api/dashboard/activity', (req, res) => {
@@ -225,6 +247,49 @@ app.post('/api/vehicles', (req, res) => {
   saveData();
 
   res.status(201).json(newVehicle);
+});
+
+app.delete('/api/security-alerts/:id', (req, res) => {
+  const alertId = Number(req.params.id);
+
+  securityAlerts = securityAlerts.filter((alert) => alert.id !== alertId);
+
+  saveData();
+
+  res.status(204).send();
+});
+
+app.delete('/api/vehicles/:id', (req, res) => {
+  const vehicleId = req.params.id;
+
+  vehicles = vehicles.filter(
+    (vehicle) => vehicle.id !== vehicleId
+  );
+
+  saveData();
+
+  res.status(204).send();
+});
+
+app.put('/api/vehicles/:id/toggle-certificate', (req, res) => {
+  const vehicleId = req.params.id;
+
+  const vehicle = vehicles.find((vehicle) => vehicle.id === vehicleId);
+
+  if (!vehicle) {
+    res.status(404).json({ message: 'Vehicle not found' });
+    return;
+  }
+
+  vehicle.certificate =
+    vehicle.certificate === 'Valid' ? 'Expired' : 'Valid';
+
+  vehicle.status =
+    vehicle.certificate === 'Expired' ? 'Denied' : 'Authenticated';
+
+  vehicle.lastSeen = new Date().toLocaleTimeString('en-GB');
+
+  res.json(vehicle);
 });
 
 app.delete('/api/security-alerts/:id', (req, res) => {

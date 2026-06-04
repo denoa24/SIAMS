@@ -33,21 +33,10 @@ export function VehiclesPage() {
   const loadVehicles = async () => {
     const params = new URLSearchParams();
 
-    if (search.trim()) {
-      params.append('search', search.trim());
-    }
-
-    if (selectedStatus) {
-      params.append('status', selectedStatus);
-    }
-
-    if (selectedRsu) {
-      params.append('rsu', selectedRsu);
-    }
-
-    if (selectedCertificate) {
-      params.append('certificate', selectedCertificate);
-    }
+    if (search.trim()) params.append('search', search.trim());
+    if (selectedStatus) params.append('status', selectedStatus);
+    if (selectedRsu) params.append('rsu', selectedRsu);
+    if (selectedCertificate) params.append('certificate', selectedCertificate);
 
     const queryString = params.toString();
     const url = queryString ? `/vehicles?${queryString}` : '/vehicles';
@@ -57,9 +46,7 @@ export function VehiclesPage() {
   };
 
   const addVehicle = async () => {
-    if (!vehicleId || !location || !speed || !rsu) {
-      return;
-    }
+    if (!vehicleId || !location || !speed || !rsu) return;
 
     await api.post('/vehicles', {
       id: vehicleId,
@@ -75,6 +62,20 @@ export function VehiclesPage() {
     setRsu('');
     setCertificate('Valid');
 
+    await loadVehicles();
+  };
+
+  const deleteVehicle = async (vehicleId: string) => {
+    const confirmed = window.confirm(`Delete vehicle ${vehicleId}?`);
+
+    if (!confirmed) return;
+
+    await api.delete(`/vehicles/${vehicleId}`);
+    await loadVehicles();
+  };
+
+  const toggleCertificate = async (vehicleId: string) => {
+    await api.put(`/vehicles/${vehicleId}/toggle-certificate`);
     await loadVehicles();
   };
 
@@ -208,6 +209,7 @@ export function VehiclesPage() {
               <th>RSU</th>
               <th>Certificate</th>
               <th>Last Seen</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
@@ -237,12 +239,28 @@ export function VehiclesPage() {
                 </td>
 
                 <td>{vehicle.lastSeen}</td>
+
+                <td className="vehicle-actions">
+                  <button
+                    className="toggle-certificate-button"
+                    onClick={() => toggleCertificate(vehicle.id)}
+                  >
+                    Toggle Certificate
+                  </button>
+
+                  <button
+                    className="delete-vehicle-button"
+                    onClick={() => deleteVehicle(vehicle.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
 
             {vehicles.length === 0 && (
               <tr>
-                <td colSpan={7} className="empty-table-message">
+                <td colSpan={8} className="empty-table-message">
                   No vehicles found.
                 </td>
               </tr>
