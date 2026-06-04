@@ -28,8 +28,13 @@ export function AccessRequestsPage() {
   };
 
   useEffect(() => {
-    loadRequests();
-  }, []);
+  const loadInitialRequests = async () => {
+    const response = await api.get('/access-requests');
+    setRequests(response.data);
+  };
+
+  loadInitialRequests();
+}, []);
 
   const totalRequests = requests.length;
   const grantedRequests = requests.filter((request) => request.status === 'Granted').length;

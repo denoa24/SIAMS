@@ -10,44 +10,41 @@ type DashboardStats = {
   activeRSUs: number;
 };
 
+type ActivityLog = {
+  id: number;
+  vehicleId: string;
+  rsuId: string;
+  status: 'Granted' | 'Denied' | 'Pending';
+  timestamp: string;
+  reason: string;
+};
+
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
 
-  const activityLogs = [
-    {
-      vehicle: 'VH-1024',
-      rsu: 'RSU-04',
-      status: 'Authenticated',
-      time: '14:32:12',
-    },
-    {
-      vehicle: 'VH-2201',
-      rsu: 'RSU-11',
-      status: 'Denied',
-      time: '14:31:04',
-    },
-    {
-      vehicle: 'VH-8891',
-      rsu: 'RSU-02',
-      status: 'Authenticated',
-      time: '14:29:18',
-    },
-    {
-      vehicle: 'VH-4502',
-      rsu: 'RSU-09',
-      status: 'Pending',
-      time: '14:27:55',
-    },
-  ];
+  const loadDashboardData = async () => {
+    const statsResponse = await api.get('/dashboard/stats');
+    setStats(statsResponse.data);
 
-  useEffect(() => {
-    const loadDashboardStats = async () => {
-      const response = await api.get('/dashboard/stats');
-      setStats(response.data);
-    };
+    const activityResponse = await api.get('/dashboard/activity');
+    setActivityLogs(activityResponse.data);
+  };
 
-    loadDashboardStats();
-  }, []);
+  const simulateAccess = async () => {
+    await api.post('/access-requests/simulate');
+    await loadDashboardData();
+  };
+
+ useEffect(() => {
+  api.get('/dashboard/stats').then((statsResponse) => {
+    setStats(statsResponse.data);
+  });
+
+  api.get('/dashboard/activity').then((activityResponse) => {
+    setActivityLogs(activityResponse.data);
+  });
+}, []);
 
   return (
     <div className="dashboard-page">
@@ -125,7 +122,9 @@ export function DashboardPage() {
                 </p>
               </div>
 
-              <button className="search-button">Simulate Access</button>
+              <button className="search-button" onClick={simulateAccess}>
+                Simulate Access
+              </button>
             </div>
 
             <div className="table-container">
@@ -141,19 +140,63 @@ export function DashboardPage() {
 
                 <tbody>
                   {activityLogs.map((log) => (
-                    <tr key={`${log.vehicle}-${log.time}`} className="table-row">
-                      <td>{log.vehicle}</td>
-                      <td>{log.rsu}</td>
+                    <tr key={log.id} className="table-row">
+                      <td>{log.vehicleId}</td>
+                      <td>{log.rsuId}</td>
+
                       <td>
                         <span className={`status-badge ${log.status.toLowerCase()}`}>
                           {log.status}
                         </span>
                       </td>
-                      <td>{log.time}</td>
+
+                      <td>{log.timestamp}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <div className="right-panels">
+            <div className="panel-card">
+              <h3 className="panel-title">Security Alerts</h3>
+
+              <div className="alerts-list">
+                <div className="alert-card danger-alert">
+                  <p className="alert-title danger-text">
+                    Unauthorized Access Attempt
+                  </p>
+                  <p className="alert-description">
+                    Vehicle access denied due to invalid credentials.
+                  </p>
+                </div>
+
+                <div className="alert-card warning-alert">
+                  <p className="alert-title warning-text">
+                    Expired Vehicle Certificate
+                  </p>
+                  <p className="alert-description">
+                    One or more vehicles require certificate renewal.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="panel-card">
+              <h3 className="panel-title">System Flow</h3>
+
+              <div className="architecture-flow">
+                <div className="architecture-step">Vehicle Layer</div>
+                <div className="flow-arrow">↓</div>
+                <div className="architecture-step">RSU Infrastructure</div>
+                <div className="flow-arrow">↓</div>
+                <div className="architecture-step">V2I Communication</div>
+                <div className="flow-arrow">↓</div>
+                <div className="architecture-step">Authentication Server</div>
+                <div className="flow-arrow">↓</div>
+                <div className="architecture-step">Cloud Database</div>
+              </div>
             </div>
           </div>
         </section>

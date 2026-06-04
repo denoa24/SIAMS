@@ -1,62 +1,67 @@
+import { useEffect, useState } from 'react';
 import { PageHeader } from '../../components/PageHeader';
+import { api } from '../../services/api';
 import './AnalyticsPage.css';
 
-type Metric = {
-  title: string;
-  value: string;
-  trend: string;
-  type: 'success' | 'warning' | 'danger' | 'info';
-};
-
-type ChartBar = {
-  label: string;
-  value: number;
+type AnalyticsData = {
+  totalRequests: number;
+  grantedRequests: number;
+  deniedRequests: number;
+  successRate: number;
+  deniedRate: number;
+  totalVehicles: number;
+  totalAlerts: number;
+  activeRSUs: number;
 };
 
 export function AnalyticsPage() {
-  const metrics: Metric[] = [
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+
+  useEffect(() => {
+    api.get('/analytics').then((response) => {
+      setAnalytics(response.data);
+    });
+  }, []);
+
+  if (!analytics) {
+    return (
+      <div className="analytics-page">
+        <PageHeader
+          title="Analytics"
+          description="Analyze authentication activity, RSU load and system performance."
+        />
+
+        <p>Loading analytics...</p>
+      </div>
+    );
+  }
+
+  const metrics = [
     {
       title: 'Authentication Success Rate',
-      value: '95.5%',
-      trend: '+2.3% this week',
+      value: `${analytics.successRate}%`,
+      trend: `${analytics.grantedRequests} granted requests`,
       type: 'success',
     },
     {
       title: 'Denied Requests',
-      value: '56',
-      trend: '-8 compared to yesterday',
+      value: `${analytics.deniedRequests}`,
+      trend: `${analytics.deniedRate}% denied rate`,
       type: 'danger',
     },
     {
-      title: 'Average Response Time',
-      value: '120ms',
-      trend: 'Stable',
-      type: 'info',
-    },
-    {
-      title: 'RSU Load',
-      value: '72%',
-      trend: 'Moderate usage',
+      title: 'Total Security Alerts',
+      value: `${analytics.totalAlerts}`,
+      trend: 'Generated from denied requests',
       type: 'warning',
     },
-  ];
-
-  const hourlyRequests: ChartBar[] = [
-    { label: '08:00', value: 35 },
-    { label: '10:00', value: 58 },
-    { label: '12:00', value: 76 },
-    { label: '14:00', value: 92 },
-    { label: '16:00', value: 64 },
-    { label: '18:00', value: 48 },
-  ];
-
-  const rsuLoad: ChartBar[] = [
-    { label: 'RSU-01', value: 60 },
-    { label: 'RSU-02', value: 85 },
-    { label: 'RSU-03', value: 45 },
-    { label: 'RSU-04', value: 72 },
-    { label: 'RSU-05', value: 38 },
-  ];
+    {
+      title: 'Active RSUs',
+      value: `${analytics.activeRSUs}`,
+      trend: `${analytics.totalVehicles} connected vehicles`,
+      type: 'info',
+    },
+  ] as const;
 
   return (
     <div className="analytics-page">
@@ -77,77 +82,63 @@ export function AnalyticsPage() {
 
       <section className="analytics-grid">
         <div className="analytics-card">
-          <div className="analytics-card-header">
-            <div>
-              <h2>Authentication Requests per Hour</h2>
-              <p>Simulated V2I access requests during the current day.</p>
-            </div>
-          </div>
+          <h2>Authentication Overview</h2>
+          <p>Current success and denied request distribution.</p>
 
-          <div className="bar-chart">
-            {hourlyRequests.map((item) => (
-              <div key={item.label} className="bar-item">
-                <div className="bar-wrapper">
-                  <div
-                    className="bar-fill"
-                    style={{ height: `${item.value}%` }}
-                  ></div>
-                </div>
-                <span>{item.label}</span>
+          <div className="horizontal-chart">
+            <div className="horizontal-bar-row">
+              <div className="horizontal-bar-info">
+                <span>Granted Requests</span>
+                <strong>{analytics.successRate}%</strong>
               </div>
-            ))}
+
+              <div className="horizontal-bar-track">
+                <div
+                  className="horizontal-bar-fill"
+                  style={{ width: `${analytics.successRate}%` }}
+                ></div>
+              </div>
+            </div>
+
+            <div className="horizontal-bar-row">
+              <div className="horizontal-bar-info">
+                <span>Denied Requests</span>
+                <strong>{analytics.deniedRate}%</strong>
+              </div>
+
+              <div className="horizontal-bar-track">
+                <div
+                  className="horizontal-bar-fill denied-fill"
+                  style={{ width: `${analytics.deniedRate}%` }}
+                ></div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className="analytics-card">
-          <div className="analytics-card-header">
+          <h2>System Summary</h2>
+          <p>General backend-generated monitoring data.</p>
+
+          <div className="performance-grid small-summary">
             <div>
-              <h2>RSU Load Distribution</h2>
-              <p>Current simulated infrastructure usage.</p>
-            </div>
-          </div>
-
-          <div className="horizontal-chart">
-            {rsuLoad.map((item) => (
-              <div key={item.label} className="horizontal-bar-row">
-                <div className="horizontal-bar-info">
-                  <span>{item.label}</span>
-                  <strong>{item.value}%</strong>
-                </div>
-
-                <div className="horizontal-bar-track">
-                  <div
-                    className="horizontal-bar-fill"
-                    style={{ width: `${item.value}%` }}
-                  ></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="analytics-card wide-card">
-          <h2>System Performance Summary</h2>
-
-          <div className="performance-grid">
-            <div>
-              <span>Total Vehicles Processed</span>
-              <strong>12,840</strong>
+              <span>Total Requests</span>
+              <strong>{analytics.totalRequests}</strong>
             </div>
 
             <div>
-              <span>Successful Authentications</span>
-              <strong>12,264</strong>
+              <span>Granted</span>
+              <strong>{analytics.grantedRequests}</strong>
             </div>
 
             <div>
-              <span>Failed Authentications</span>
-              <strong>576</strong>
+              <span>Denied</span>
+              <strong>{analytics.deniedRequests}</strong>
             </div>
 
             <div>
-              <span>Active RSUs</span>
-              <strong>24</strong>
+              <span>Security Alerts</span>
+              <strong>{analytics.totalAlerts}</strong>
             </div>
           </div>
         </div>

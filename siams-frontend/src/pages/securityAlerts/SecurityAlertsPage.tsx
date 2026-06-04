@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { PageHeader } from '../../components/PageHeader';
+import { api } from '../../services/api';
 import './SecurityAlertsPage.css';
 
 type AlertSeverity = 'Critical' | 'High' | 'Medium' | 'Low';
@@ -14,44 +16,21 @@ type SecurityAlert = {
 };
 
 export function SecurityAlertsPage() {
-  const alerts: SecurityAlert[] = [
-    {
-      id: 1,
-      title: 'Unauthorized Access Attempt',
-      vehicleId: 'VH-2201',
-      rsuId: 'RSU-11',
-      severity: 'Critical',
-      timestamp: '14:31:04',
-      description: 'Vehicle attempted to access infrastructure with an expired certificate.',
-    },
-    {
-      id: 2,
-      title: 'Expired Vehicle Certificate',
-      vehicleId: 'VH-9911',
-      rsuId: 'RSU-07',
-      severity: 'High',
-      timestamp: '14:25:44',
-      description: 'Vehicle certificate is no longer valid and requires renewal.',
-    },
-    {
-      id: 3,
-      title: 'Multiple Failed Authentications',
-      vehicleId: 'VH-3088',
-      rsuId: 'RSU-03',
-      severity: 'Medium',
-      timestamp: '14:18:12',
-      description: 'Several failed authentication attempts were detected from the same vehicle.',
-    },
-    {
-      id: 4,
-      title: 'Communication Delay Detected',
-      vehicleId: 'VH-7102',
-      rsuId: 'RSU-09',
-      severity: 'Low',
-      timestamp: '14:10:27',
-      description: 'Delayed response detected between the vehicle and the RSU unit.',
-    },
-  ];
+  const [alerts, setAlerts] = useState<SecurityAlert[]>([]);
+
+  useEffect(() => {
+    const loadAlerts = async () => {
+      const response = await api.get('/security-alerts');
+      setAlerts(response.data);
+    };
+
+    loadAlerts();
+  }, []);
+
+  const criticalAlerts = alerts.filter((alert) => alert.severity === 'Critical').length;
+  const highAlerts = alerts.filter((alert) => alert.severity === 'High').length;
+  const mediumAlerts = alerts.filter((alert) => alert.severity === 'Medium').length;
+  const lowAlerts = alerts.filter((alert) => alert.severity === 'Low').length;
 
   return (
     <div className="security-page">
@@ -63,22 +42,22 @@ export function SecurityAlertsPage() {
       <div className="security-summary">
         <div className="security-summary-card critical-border">
           <h3>Critical Alerts</h3>
-          <p>3</p>
+          <p>{criticalAlerts}</p>
         </div>
 
         <div className="security-summary-card high-border">
           <h3>High Severity</h3>
-          <p>7</p>
+          <p>{highAlerts}</p>
         </div>
 
         <div className="security-summary-card medium-border">
           <h3>Medium Severity</h3>
-          <p>12</p>
+          <p>{mediumAlerts}</p>
         </div>
 
         <div className="security-summary-card low-border">
           <h3>Low Severity</h3>
-          <p>18</p>
+          <p>{lowAlerts}</p>
         </div>
       </div>
 
