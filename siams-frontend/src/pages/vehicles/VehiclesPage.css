@@ -1,0 +1,149 @@
+.vehicles-page {
+  color: #f8fafc;
+}
+
+.vehicles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.vehicles-header h1 {
+  font-size: 38px;
+  margin-bottom: 8px;
+}
+
+.vehicles-header p {
+  color: #94a3b8;
+}
+
+.add-vehicle-button {
+  background: #00c2ff;
+  color: #0b1120;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-vehicle-button:hover {
+  background: #38d9ff;
+}
+
+.vehicles-filters {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.vehicles-filters input,
+.vehicles-filters select {
+  background: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 13px 16px;
+  outline: none;
+}
+
+.vehicles-filters input {
+  width: 280px;
+}
+
+.vehicles-table-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.vehicles-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vehicles-table thead {
+  background: #0f172a;
+}
+
+.vehicles-table th,
+.vehicles-table td {
+  padding: 18px;
+  text-align: left;
+  border-bottom: 1px solid #334155;
+}
+
+.vehicles-table th {
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.vehicles-table tr:hover {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.vehicle-id {
+  color: #67e8f9;
+  font-weight: 700;
+}
+
+.status-badge,
+.certificate-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.authenticated {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+.denied {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.pending {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.valid {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+.expired {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+@media (max-width: 900px) {
+  .vehicles-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .vehicles-filters {
+    flex-direction: column;
+  }
+
+  .vehicles-filters input,
+  .vehicles-filters select {
+    width: 100%;
+  }
+
+  .vehicles-table-card {
+    overflow-x: auto;
+  }
+
+  .vehicles-table {
+    min-width: 850px;
+  }
+}

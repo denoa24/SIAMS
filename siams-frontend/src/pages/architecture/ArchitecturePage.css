@@ -1,0 +1,224 @@
+.architecture-page {
+  color: #f8fafc;
+}
+
+.architecture-overview-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 24px;
+  padding: 26px;
+  margin-bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.architecture-overview-card h2,
+.architecture-flow-card h2,
+.data-flow-card h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.architecture-overview-card p {
+  color: #94a3b8;
+  line-height: 1.6;
+  max-width: 850px;
+}
+
+.architecture-status {
+  min-width: 220px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 18px;
+  padding: 18px;
+  height: fit-content;
+}
+
+.architecture-status span {
+  display: block;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+.architecture-status strong {
+  color: #4ade80;
+  font-size: 20px;
+}
+
+.architecture-flow-card,
+.data-flow-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 24px;
+  padding: 26px;
+  margin-bottom: 28px;
+}
+
+.architecture-flow-diagram {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flow-layer-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.flow-layer {
+  width: 100%;
+  max-width: 720px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 22px;
+  padding: 24px;
+  text-align: center;
+  position: relative;
+}
+
+.layer-number {
+  width: 38px;
+  height: 38px;
+  background: #00c2ff;
+  color: #0b1120;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  margin: 0 auto 14px;
+}
+
+.flow-layer h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.flow-layer p {
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.flow-connector {
+  color: #00c2ff;
+  font-size: 34px;
+  font-weight: bold;
+}
+
+.architecture-details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-bottom: 28px;
+}
+
+.architecture-detail-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.detail-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.detail-card-header span {
+  width: 34px;
+  height: 34px;
+  background: rgba(0, 194, 255, 0.16);
+  color: #67e8f9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.detail-card-header h3 {
+  font-size: 20px;
+}
+
+.architecture-detail-card p {
+  color: #94a3b8;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.architecture-detail-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.architecture-detail-card li {
+  padding: 10px 0;
+  border-top: 1px solid #334155;
+  color: #cbd5e1;
+}
+
+.architecture-detail-card li::before {
+  content: '•';
+  color: #00c2ff;
+  margin-right: 10px;
+}
+
+.data-flow-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.data-step {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.data-step span {
+  width: 34px;
+  height: 34px;
+  background: #00c2ff;
+  color: #0b1120;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.data-step p {
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+@media (max-width: 1100px) {
+  .architecture-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .data-flow-steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .architecture-overview-card {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 700px) {
+  .architecture-details-grid,
+  .data-flow-steps {
+    grid-template-columns: 1fr;
+  }
+}
