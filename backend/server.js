@@ -4,32 +4,36 @@ const cors = require('cors');
 const app = express();
 const PORT = 5000;
 
+const fs = require('fs');
+const path = require('path');
+
+const dataPath = path.join(__dirname, 'data.json');
+
+const readData = () => {
+  const rawData = fs.readFileSync(dataPath);
+  return JSON.parse(rawData);
+};
+
+const writeData = (data) => {
+  fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+};
+
 app.use(cors());
 app.use(express.json());
 
-let vehicles = [
-  {
-    id: 'VH-1024',
-    status: 'Authenticated',
-    speed: 48,
-    location: 'Bucharest - Sector 1',
-    rsu: 'RSU-04',
-    lastSeen: '14:32:12',
-    certificate: 'Valid',
-  },
-  {
-    id: 'VH-2201',
-    status: 'Denied',
-    speed: 35,
-    location: 'Bucharest - Sector 3',
-    rsu: 'RSU-11',
-    lastSeen: '14:31:04',
-    certificate: 'Expired',
-  },
-];
+let data = readData();
 
-let accessRequests = [];
-let securityAlerts = [];
+let vehicles = data.vehicles;
+let accessRequests = data.accessRequests;
+let securityAlerts = data.securityAlerts;
+
+const saveData = () => {
+  writeData({
+    vehicles,
+    accessRequests,
+    securityAlerts,
+  });
+};
 
 app.get('/', (req, res) => {
   res.send('SIAMS backend is running');
@@ -68,7 +72,29 @@ app.get('/api/vehicles', (req, res) => {
 });
 
 app.get('/api/access-requests', (req, res) => {
-  res.json(accessRequests);
+  const { search, status, rsu } = req.query;
+
+  let filteredRequests = accessRequests;
+
+  if (search) {
+    filteredRequests = filteredRequests.filter((request) =>
+      request.vehicleId.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  if (status) {
+    filteredRequests = filteredRequests.filter(
+      (request) => request.status === status
+    );
+  }
+
+  if (rsu) {
+    filteredRequests = filteredRequests.filter(
+      (request) => request.rsuId === rsu
+    );
+  }
+
+  res.json(filteredRequests);
 });
 
 app.get('/api/security-alerts', (req, res) => {
@@ -87,9 +113,14 @@ app.post('/api/access-requests/simulate', (req, res) => {
   let status = 'Granted';
   let reason = 'Vehicle authenticated successfully';
 
+  const randomNumber = Math.random();
+
   if (randomVehicle.certificate === 'Expired') {
     status = 'Denied';
     reason = 'Expired certificate';
+  } else if (randomNumber < 0.25) {
+    status = 'Pending';
+    reason = 'Additional validation required';
   }
 
   const newRequest = {
@@ -116,6 +147,8 @@ app.post('/api/access-requests/simulate', (req, res) => {
 
     securityAlerts = [newAlert, ...securityAlerts];
   }
+
+  saveData();
 
   res.status(201).json(newRequest);
 });
@@ -189,7 +222,19 @@ app.post('/api/vehicles', (req, res) => {
 
   vehicles = [newVehicle, ...vehicles];
 
+  saveData();
+
   res.status(201).json(newVehicle);
+});
+
+app.delete('/api/security-alerts/:id', (req, res) => {
+  const alertId = Number(req.params.id);
+
+  securityAlerts = securityAlerts.filter((alert) => alert.id !== alertId);
+
+  saveData();
+
+  res.status(204).send();
 });
 
 app.listen(PORT, () => {

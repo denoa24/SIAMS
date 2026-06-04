@@ -17,8 +17,29 @@ type AccessRequest = {
 export function AccessRequestsPage() {
   const [requests, setRequests] = useState<AccessRequest[]>([]);
 
+  const [search, setSearch] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedRsu, setSelectedRsu] = useState('');
+
   const loadRequests = async () => {
-    const response = await api.get('/access-requests');
+    const params = new URLSearchParams();
+
+    if (search.trim()) {
+      params.append('search', search.trim());
+    }
+
+    if (selectedStatus) {
+      params.append('status', selectedStatus);
+    }
+
+    if (selectedRsu) {
+      params.append('rsu', selectedRsu);
+    }
+
+    const queryString = params.toString();
+    const url = queryString ? `/access-requests?${queryString}` : '/access-requests';
+
+    const response = await api.get(url);
     setRequests(response.data);
   };
 
@@ -27,18 +48,28 @@ export function AccessRequestsPage() {
     await loadRequests();
   };
 
-  useEffect(() => {
-  const loadInitialRequests = async () => {
+  const resetFilters = async () => {
+    setSearch('');
+    setSelectedStatus('');
+    setSelectedRsu('');
+
     const response = await api.get('/access-requests');
     setRequests(response.data);
   };
 
-  loadInitialRequests();
-}, []);
+  useEffect(() => {
+    api.get('/access-requests').then((response) => {
+      setRequests(response.data);
+    });
+  }, []);
 
   const totalRequests = requests.length;
-  const grantedRequests = requests.filter((request) => request.status === 'Granted').length;
-  const deniedRequests = requests.filter((request) => request.status === 'Denied').length;
+  const grantedRequests = requests.filter(
+    (request) => request.status === 'Granted'
+  ).length;
+  const deniedRequests = requests.filter(
+    (request) => request.status === 'Denied'
+  ).length;
 
   return (
     <div className="access-page">
@@ -62,6 +93,49 @@ export function AccessRequestsPage() {
           <h3>Denied</h3>
           <p>{deniedRequests}</p>
         </div>
+      </div>
+
+      <div className="access-filters">
+        <input
+          type="text"
+          placeholder="Search vehicle ID..."
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              loadRequests();
+            }
+          }}
+        />
+
+        <select
+          value={selectedStatus}
+          onChange={(event) => setSelectedStatus(event.target.value)}
+        >
+          <option value="">All statuses</option>
+          <option value="Granted">Granted</option>
+          <option value="Denied">Denied</option>
+          <option value="Pending">Pending</option>
+        </select>
+
+        <select
+          value={selectedRsu}
+          onChange={(event) => setSelectedRsu(event.target.value)}
+        >
+          <option value="">All RSUs</option>
+          <option value="RSU-02">RSU-02</option>
+          <option value="RSU-04">RSU-04</option>
+          <option value="RSU-09">RSU-09</option>
+          <option value="RSU-11">RSU-11</option>
+        </select>
+
+        <button className="simulate-button" onClick={loadRequests}>
+          Search
+        </button>
+
+        <button className="access-reset-button" onClick={resetFilters}>
+          Reset
+        </button>
       </div>
 
       <div className="requests-card">
@@ -102,6 +176,14 @@ export function AccessRequestsPage() {
                 <td>{request.reason}</td>
               </tr>
             ))}
+
+            {requests.length === 0 && (
+              <tr>
+                <td colSpan={6} className="empty-table-message">
+                  No access requests found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -27,6 +27,14 @@ export function SecurityAlertsPage() {
     loadAlerts();
   }, []);
 
+  const dismissAlert = async (alertId: number) => {
+    await api.delete(`/security-alerts/${alertId}`);
+
+    setAlerts((currentAlerts) =>
+      currentAlerts.filter((alert) => alert.id !== alertId)
+    );
+  };
+
   const criticalAlerts = alerts.filter((alert) => alert.severity === 'Critical').length;
   const highAlerts = alerts.filter((alert) => alert.severity === 'High').length;
   const mediumAlerts = alerts.filter((alert) => alert.severity === 'Medium').length;
@@ -99,7 +107,12 @@ export function SecurityAlertsPage() {
 
             <div className="alert-actions">
               <button className="investigate-button">Investigate</button>
-              <button className="dismiss-button">Dismiss</button>
+              <button
+                className="dismiss-button"
+                onClick={() => dismissAlert(alert.id)}
+              >
+                Dismiss
+              </button>
             </div>
           </div>
         ))}

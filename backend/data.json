@@ -1,0 +1,33 @@
+{
+  "vehicles": [
+    {
+      "id": "test",
+      "status": "Authenticated",
+      "speed": 246,
+      "location": "test",
+      "rsu": "test",
+      "lastSeen": "15:53:52",
+      "certificate": "Valid"
+    },
+    {
+      "id": "VH-1024",
+      "status": "Authenticated",
+      "speed": 48,
+      "location": "Bucharest - Sector 1",
+      "rsu": "RSU-04",
+      "lastSeen": "14:32:12",
+      "certificate": "Valid"
+    },
+    {
+      "id": "VH-2201",
+      "status": "Denied",
+      "speed": 35,
+      "location": "Bucharest - Sector 3",
+      "rsu": "RSU-11",
+      "lastSeen": "14:31:04",
+      "certificate": "Expired"
+    }
+  ],
+  "accessRequests": [],
+  "securityAlerts": []
+}

@@ -133,3 +133,44 @@
     gap: 16px;
   }
 }
+
+.access-filters {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.access-filters input,
+.access-filters select {
+  background: #1e293b;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 13px 16px;
+  outline: none;
+}
+
+.access-filters input {
+  width: 280px;
+}
+
+.access-reset-button {
+  background: transparent;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  padding: 12px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.access-reset-button:hover {
+  background: #334155;
+}
+
+.empty-table-message {
+  text-align: center;
+  color: #94a3b8;
+  padding: 30px;
+}
