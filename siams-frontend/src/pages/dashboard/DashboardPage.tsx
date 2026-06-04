@@ -1,29 +1,17 @@
+import { useEffect, useState } from 'react';
 import { Sidebar } from '../../components/Sidebar';
+import { api } from '../../services/api';
 import './DashboardPage.css';
 
+type DashboardStats = {
+  connectedVehicles: number;
+  authenticatedVehicles: number;
+  deniedRequests: number;
+  activeRSUs: number;
+};
+
 export function DashboardPage() {
-  const stats = [
-    {
-      title: 'Connected Vehicles',
-      value: '1,248',
-      status: 'Online',
-    },
-    {
-      title: 'Authenticated Vehicles',
-      value: '1,192',
-      status: 'Secure',
-    },
-    {
-      title: 'Denied Access Attempts',
-      value: '56',
-      status: 'Warning',
-    },
-    {
-      title: 'Active RSUs',
-      value: '24',
-      status: 'Operational',
-    },
-  ];
+  const [stats, setStats] = useState<DashboardStats | null>(null);
 
   const activityLogs = [
     {
@@ -52,6 +40,15 @@ export function DashboardPage() {
     },
   ];
 
+  useEffect(() => {
+    const loadDashboardStats = async () => {
+      const response = await api.get('/dashboard/stats');
+      setStats(response.data);
+    };
+
+    loadDashboardStats();
+  }, []);
+
   return (
     <div className="dashboard-page">
       <Sidebar />
@@ -77,17 +74,45 @@ export function DashboardPage() {
         </div>
 
         <section className="stats-grid">
-          {stats.map((stat) => (
-            <div key={stat.title} className="stat-card">
-              <div className="stat-header">
-                <p className="stat-title">{stat.title}</p>
-
-                <span className="stat-badge">{stat.status}</span>
-              </div>
-
-              <h3 className="stat-value">{stat.value}</h3>
+          <div className="stat-card">
+            <div className="stat-header">
+              <p className="stat-title">Connected Vehicles</p>
+              <span className="stat-badge">Online</span>
             </div>
-          ))}
+            <h3 className="stat-value">
+              {stats ? stats.connectedVehicles : 'Loading...'}
+            </h3>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-header">
+              <p className="stat-title">Authenticated Vehicles</p>
+              <span className="stat-badge">Secure</span>
+            </div>
+            <h3 className="stat-value">
+              {stats ? stats.authenticatedVehicles : 'Loading...'}
+            </h3>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-header">
+              <p className="stat-title">Denied Access Attempts</p>
+              <span className="stat-badge">Warning</span>
+            </div>
+            <h3 className="stat-value">
+              {stats ? stats.deniedRequests : 'Loading...'}
+            </h3>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-header">
+              <p className="stat-title">Active RSUs</p>
+              <span className="stat-badge">Operational</span>
+            </div>
+            <h3 className="stat-value">
+              {stats ? stats.activeRSUs : 'Loading...'}
+            </h3>
+          </div>
         </section>
 
         <section className="dashboard-grid">
@@ -119,62 +144,16 @@ export function DashboardPage() {
                     <tr key={`${log.vehicle}-${log.time}`} className="table-row">
                       <td>{log.vehicle}</td>
                       <td>{log.rsu}</td>
-
                       <td>
-                        <span
-                          className={`status-badge ${log.status.toLowerCase()}`}
-                        >
+                        <span className={`status-badge ${log.status.toLowerCase()}`}>
                           {log.status}
                         </span>
                       </td>
-
                       <td>{log.time}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-            </div>
-          </div>
-
-          <div className="right-panels">
-            <div className="panel-card">
-              <h3 className="panel-title">Security Alerts</h3>
-
-              <div className="alerts-list">
-                <div className="alert-card danger-alert">
-                  <p className="alert-title danger-text">
-                    Unauthorized Access Attempt
-                  </p>
-                  <p className="alert-description">
-                    Vehicle VH-2201 denied at RSU-11.
-                  </p>
-                </div>
-
-                <div className="alert-card warning-alert">
-                  <p className="alert-title warning-text">
-                    Expired Vehicle Certificate
-                  </p>
-                  <p className="alert-description">
-                    Vehicle VH-9911 requires certificate renewal.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="panel-card">
-              <h3 className="panel-title">System Flow</h3>
-
-              <div className="architecture-flow">
-                <div className="architecture-step">Vehicle Layer</div>
-                <div className="flow-arrow">↓</div>
-                <div className="architecture-step">RSU Infrastructure</div>
-                <div className="flow-arrow">↓</div>
-                <div className="architecture-step">V2I Communication</div>
-                <div className="flow-arrow">↓</div>
-                <div className="architecture-step">Authentication Server</div>
-                <div className="flow-arrow">↓</div>
-                <div className="architecture-step">Cloud Database</div>
-              </div>
             </div>
           </div>
         </section>
