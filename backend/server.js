@@ -7,7 +7,7 @@ const PORT = 5000;
 app.use(cors());
 app.use(express.json());
 
-const vehicles = [
+let vehicles = [
   {
     id: 'VH-1024',
     status: 'Authenticated',
@@ -36,7 +36,35 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/vehicles', (req, res) => {
-  res.json(vehicles);
+  const { search, status, rsu, certificate } = req.query;
+
+  let filteredVehicles = vehicles;
+
+  if (search) {
+    filteredVehicles = filteredVehicles.filter((vehicle) =>
+      vehicle.id.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  if (status) {
+    filteredVehicles = filteredVehicles.filter(
+      (vehicle) => vehicle.status === status
+    );
+  }
+
+  if (rsu) {
+    filteredVehicles = filteredVehicles.filter(
+      (vehicle) => vehicle.rsu === rsu
+    );
+  }
+
+  if (certificate) {
+    filteredVehicles = filteredVehicles.filter(
+      (vehicle) => vehicle.certificate === certificate
+    );
+  }
+
+  res.json(filteredVehicles);
 });
 
 app.get('/api/access-requests', (req, res) => {
@@ -144,6 +172,24 @@ app.get('/api/analytics', (req, res) => {
     totalAlerts: securityAlerts.length,
     activeRSUs: new Set(vehicles.map((vehicle) => vehicle.rsu)).size,
   });
+});
+
+app.post('/api/vehicles', (req, res) => {
+  const { id, speed, location, rsu, certificate } = req.body;
+
+  const newVehicle = {
+    id,
+    status: certificate === 'Expired' ? 'Denied' : 'Authenticated',
+    speed,
+    location,
+    rsu,
+    lastSeen: new Date().toLocaleTimeString('en-GB'),
+    certificate,
+  };
+
+  vehicles = [newVehicle, ...vehicles];
+
+  res.status(201).json(newVehicle);
 });
 
 app.listen(PORT, () => {

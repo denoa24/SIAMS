@@ -147,3 +147,63 @@
     min-width: 850px;
   }
 }
+
+.vehicle-search-button {
+  background: #00c2ff;
+  color: #0b1120;
+  border: none;
+  padding: 13px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.vehicle-search-button:hover {
+  background: #38d9ff;
+}
+
+.empty-table-message {
+  text-align: center;
+  color: #94a3b8;
+  padding: 30px;
+}
+
+.vehicle-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 22px;
+  padding: 20px;
+}
+
+.vehicle-form input,
+.vehicle-form select {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 13px 16px;
+  outline: none;
+}
+
+.vehicle-form input:focus,
+.vehicle-form select:focus {
+  border-color: #00c2ff;
+}
+
+.vehicle-reset-button {
+  background: transparent;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  padding: 13px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.vehicle-reset-button:hover {
+  background: #334155;
+}

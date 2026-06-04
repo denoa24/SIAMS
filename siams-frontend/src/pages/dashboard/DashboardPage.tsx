@@ -19,9 +19,20 @@ type ActivityLog = {
   reason: string;
 };
 
+type SecurityAlert = {
+  id: number;
+  title: string;
+  vehicleId: string;
+  rsuId: string;
+  severity: 'Critical' | 'High' | 'Medium' | 'Low';
+  timestamp: string;
+  description: string;
+};
+
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
+  const [securityAlerts, setSecurityAlerts] = useState<SecurityAlert[]>([]);
 
   const loadDashboardData = async () => {
     const statsResponse = await api.get('/dashboard/stats');
@@ -29,6 +40,9 @@ export function DashboardPage() {
 
     const activityResponse = await api.get('/dashboard/activity');
     setActivityLogs(activityResponse.data);
+
+    const alertsResponse = await api.get('/dashboard/alerts');
+    setSecurityAlerts(alertsResponse.data);
   };
 
   const simulateAccess = async () => {
@@ -36,15 +50,19 @@ export function DashboardPage() {
     await loadDashboardData();
   };
 
- useEffect(() => {
-  api.get('/dashboard/stats').then((statsResponse) => {
-    setStats(statsResponse.data);
-  });
+  useEffect(() => {
+    api.get('/dashboard/stats').then((statsResponse) => {
+      setStats(statsResponse.data);
+    });
 
-  api.get('/dashboard/activity').then((activityResponse) => {
-    setActivityLogs(activityResponse.data);
-  });
-}, []);
+    api.get('/dashboard/activity').then((activityResponse) => {
+      setActivityLogs(activityResponse.data);
+    });
+
+    api.get('/security-alerts').then((alertsResponse) => {
+      setSecurityAlerts(alertsResponse.data.slice(0, 2));
+    });
+  }, []);
 
   return (
     <div className="dashboard-page">
@@ -163,15 +181,28 @@ export function DashboardPage() {
               <h3 className="panel-title">Security Alerts</h3>
 
               <div className="alerts-list">
-                <div className="alert-card danger-alert">
-                  <p className="alert-title danger-text">
-                    Unauthorized Access Attempt
-                  </p>
-                  <p className="alert-description">
-                    Vehicle access denied due to invalid credentials.
-                  </p>
-                </div>
+                <div className="alerts-list">
+                  {securityAlerts.length === 0 && (
+                    <p className="empty-alerts-message">No active security alerts.</p>
+                  )}
 
+                  {securityAlerts.map((alert) => (
+                    <div
+                      key={alert.id}
+                      className={`alert-card ${alert.severity === 'Critical' ? 'danger-alert' : 'warning-alert'
+                        }`}
+                    >
+                      <p
+                        className={`alert-title ${alert.severity === 'Critical' ? 'danger-text' : 'warning-text'
+                          }`}
+                      >
+                        {alert.title}
+                      </p>
+
+                      <p className="alert-description">{alert.description}</p>
+                    </div>
+                  ))}
+                </div>
                 <div className="alert-card warning-alert">
                   <p className="alert-title warning-text">
                     Expired Vehicle Certificate
