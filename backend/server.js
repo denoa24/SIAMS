@@ -43,6 +43,32 @@ const vehicles = [
   },
 ];
 
+let accessRequests = [
+  {
+    id: 1,
+    vehicleId: 'VH-1024',
+    rsuId: 'RSU-04',
+    timestamp: '14:32:12',
+    status: 'Granted',
+    reason: 'Vehicle authenticated successfully',
+  },
+  {
+    id: 2,
+    vehicleId: 'VH-2201',
+    rsuId: 'RSU-11',
+    timestamp: '14:31:04',
+    status: 'Denied',
+    reason: 'Expired certificate',
+  },
+  {
+    id: 3,
+    vehicleId: 'VH-4502',
+    rsuId: 'RSU-09',
+    timestamp: '14:27:55',
+    status: 'Pending',
+    reason: 'Awaiting validation',
+  },
+];
 
 app.use(cors());
 app.use(express.json());
@@ -62,6 +88,38 @@ app.get('/api/dashboard/stats', (req, res) => {
 
 app.get('/api/vehicles', (req, res) => {
   res.json(vehicles);
+});
+
+app.get('/api/access-requests', (req, res) => {
+  res.json(accessRequests);
+});
+
+app.post('/api/access-requests/simulate', (req, res) => {
+  const randomVehicle = vehicles[Math.floor(Math.random() * vehicles.length)];
+
+  let status = 'Granted';
+  let reason = 'Vehicle authenticated successfully';
+
+  if (randomVehicle.certificate === 'Expired') {
+    status = 'Denied';
+    reason = 'Expired certificate';
+  } else if (randomVehicle.status === 'Pending') {
+    status = 'Pending';
+    reason = 'Awaiting validation';
+  }
+
+  const newRequest = {
+    id: accessRequests.length + 1,
+    vehicleId: randomVehicle.id,
+    rsuId: randomVehicle.rsu,
+    timestamp: new Date().toLocaleTimeString('en-GB'),
+    status,
+    reason,
+  };
+
+  accessRequests = [newRequest, ...accessRequests];
+
+  res.status(201).json(newRequest);
 });
 
 

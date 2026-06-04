@@ -1,10 +1,9 @@
+import { useEffect, useState } from 'react';
 import { PageHeader } from '../../components/PageHeader';
+import { api } from '../../services/api';
 import './AccessRequestsPage.css';
 
-type RequestStatus =
-  | 'Granted'
-  | 'Denied'
-  | 'Pending';
+type RequestStatus = 'Granted' | 'Denied' | 'Pending';
 
 type AccessRequest = {
   id: number;
@@ -16,40 +15,25 @@ type AccessRequest = {
 };
 
 export function AccessRequestsPage() {
-  const requests: AccessRequest[] = [
-    {
-      id: 1,
-      vehicleId: 'VH-1024',
-      rsuId: 'RSU-04',
-      timestamp: '14:32:12',
-      status: 'Granted',
-      reason: 'Vehicle authenticated successfully',
-    },
-    {
-      id: 2,
-      vehicleId: 'VH-2201',
-      rsuId: 'RSU-11',
-      timestamp: '14:31:04',
-      status: 'Denied',
-      reason: 'Expired certificate',
-    },
-    {
-      id: 3,
-      vehicleId: 'VH-4502',
-      rsuId: 'RSU-09',
-      timestamp: '14:27:55',
-      status: 'Pending',
-      reason: 'Awaiting validation',
-    },
-    {
-      id: 4,
-      vehicleId: 'VH-8891',
-      rsuId: 'RSU-02',
-      timestamp: '14:24:40',
-      status: 'Granted',
-      reason: 'Trusted vehicle',
-    },
-  ];
+  const [requests, setRequests] = useState<AccessRequest[]>([]);
+
+  const loadRequests = async () => {
+    const response = await api.get('/access-requests');
+    setRequests(response.data);
+  };
+
+  const simulateRequest = async () => {
+    await api.post('/access-requests/simulate');
+    await loadRequests();
+  };
+
+  useEffect(() => {
+    loadRequests();
+  }, []);
+
+  const totalRequests = requests.length;
+  const grantedRequests = requests.filter((request) => request.status === 'Granted').length;
+  const deniedRequests = requests.filter((request) => request.status === 'Denied').length;
 
   return (
     <div className="access-page">
@@ -61,17 +45,17 @@ export function AccessRequestsPage() {
       <div className="access-summary">
         <div className="summary-card">
           <h3>Total Requests</h3>
-          <p>1248</p>
+          <p>{totalRequests}</p>
         </div>
 
         <div className="summary-card granted-card">
           <h3>Granted</h3>
-          <p>1192</p>
+          <p>{grantedRequests}</p>
         </div>
 
         <div className="summary-card denied-card">
           <h3>Denied</h3>
-          <p>56</p>
+          <p>{deniedRequests}</p>
         </div>
       </div>
 
@@ -79,7 +63,7 @@ export function AccessRequestsPage() {
         <div className="requests-header">
           <h2>Authentication Requests</h2>
 
-          <button className="simulate-button">
+          <button className="simulate-button" onClick={simulateRequest}>
             Simulate Request
           </button>
         </div>
@@ -100,23 +84,16 @@ export function AccessRequestsPage() {
             {requests.map((request) => (
               <tr key={request.id}>
                 <td>{request.id}</td>
-
-                <td className="vehicle-column">
-                  {request.vehicleId}
-                </td>
-
+                <td className="vehicle-column">{request.vehicleId}</td>
                 <td>{request.rsuId}</td>
 
                 <td>
-                  <span
-                    className={`request-status ${request.status.toLowerCase()}`}
-                  >
+                  <span className={`request-status ${request.status.toLowerCase()}`}>
                     {request.status}
                   </span>
                 </td>
 
                 <td>{request.timestamp}</td>
-
                 <td>{request.reason}</td>
               </tr>
             ))}
