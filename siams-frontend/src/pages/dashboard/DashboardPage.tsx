@@ -64,6 +64,24 @@ export function DashboardPage() {
     });
   }, []);
 
+useEffect(() => {
+  const interval = setInterval(() => {
+    api.get('/dashboard/stats').then((statsResponse) => {
+      setStats(statsResponse.data);
+    });
+
+    api.get('/dashboard/activity').then((activityResponse) => {
+      setActivityLogs(activityResponse.data);
+    });
+
+    api.get('/security-alerts').then((alertsResponse) => {
+      setSecurityAlerts(alertsResponse.data.slice(0, 2));
+    });
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, []);
+
   return (
     <div className="dashboard-page">
       <Sidebar />
