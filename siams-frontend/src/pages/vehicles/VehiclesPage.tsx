@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { PageHeader } from '../../components/PageHeader';
 import { api } from '../../services/api';
 import './VehiclesPage.css';
@@ -14,6 +16,8 @@ type Vehicle = {
   rsu: string;
   lastSeen: string;
   certificate: CertificateStatus;
+  lat?: number;
+  lng?: number;
 };
 
 export function VehiclesPage() {
@@ -30,6 +34,10 @@ export function VehiclesPage() {
   const [rsu, setRsu] = useState('');
   const [certificate, setCertificate] = useState<CertificateStatus>('Valid');
 
+  const [formError, setFormError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [pageError, setPageError] = useState('');
+
   const loadVehicles = async () => {
     const params = new URLSearchParams();
 
@@ -41,28 +49,71 @@ export function VehiclesPage() {
     const queryString = params.toString();
     const url = queryString ? `/vehicles?${queryString}` : '/vehicles';
 
-    const response = await api.get(url);
-    setVehicles(response.data);
+    try {
+      setLoading(true);
+      setPageError('');
+
+      const response = await api.get(url);
+      setVehicles(response.data);
+    } catch {
+      setPageError('Could not load vehicles.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const addVehicle = async () => {
-    if (!vehicleId || !location || !speed || !rsu) return;
+    setFormError('');
 
-    await api.post('/vehicles', {
-      id: vehicleId,
-      speed: Number(speed),
-      location,
-      rsu,
-      certificate,
-    });
+    if (!vehicleId.trim() || !location.trim() || !speed || !rsu.trim()) {
+      setFormError('Please complete all vehicle fields.');
+      return;
+    }
 
-    setVehicleId('');
-    setLocation('');
-    setSpeed('');
-    setRsu('');
-    setCertificate('Valid');
+    if (Number(speed) < 0) {
+      setFormError('Speed cannot be negative.');
+      return;
+    }
 
-    await loadVehicles();
+    try {
+      await api.post('/vehicles', {
+        id: vehicleId.trim(),
+        speed: Number(speed),
+        location: location.trim(),
+        rsu: rsu.trim(),
+        certificate,
+      });
+
+      setVehicleId('');
+      setLocation('');
+      setSpeed('');
+      setRsu('');
+      setCertificate('Valid');
+
+      await loadVehicles();
+      toast.success('Vehicle added successfully.');
+    } catch (error: unknown) {
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'response' in error
+      ) {
+        const axiosError = error as {
+          response?: {
+            data?: {
+              message?: string;
+            };
+          };
+        };
+
+        setFormError(
+          axiosError.response?.data?.message || 'Could not add vehicle.'
+        );
+        return;
+      }
+
+      setFormError('Could not add vehicle.');
+    }
   };
 
   const deleteVehicle = async (vehicleId: string) => {
@@ -70,13 +121,23 @@ export function VehiclesPage() {
 
     if (!confirmed) return;
 
-    await api.delete(`/vehicles/${vehicleId}`);
-    await loadVehicles();
+    try {
+      await api.delete(`/vehicles/${vehicleId}`);
+      await loadVehicles();
+      toast.success('Vehicle deleted successfully.');
+    } catch {
+      setPageError('Could not delete vehicle.');
+    }
   };
 
   const toggleCertificate = async (vehicleId: string) => {
-    await api.put(`/vehicles/${vehicleId}/toggle-certificate`);
-    await loadVehicles();
+    try {
+      await api.put(`/vehicles/${vehicleId}/toggle-certificate`);
+      await loadVehicles();
+      toast.info('Vehicle certificate updated.');
+    } catch {
+      toast.error('Could not complete the action.');
+    }
   };
 
   const resetFilters = async () => {
@@ -85,8 +146,17 @@ export function VehiclesPage() {
     setSelectedRsu('');
     setSelectedCertificate('');
 
-    const response = await api.get('/vehicles');
-    setVehicles(response.data);
+    try {
+      setLoading(true);
+      setPageError('');
+
+      const response = await api.get('/vehicles');
+      setVehicles(response.data);
+    } catch {
+      setPageError('Could not reset filters.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -146,6 +216,12 @@ export function VehiclesPage() {
         </button>
       </div>
 
+      {formError && (
+        <p className="form-error-message">
+          {formError}
+        </p>
+      )}
+
       <div className="vehicles-filters">
         <input
           type="text"
@@ -197,6 +273,18 @@ export function VehiclesPage() {
           Reset
         </button>
       </div>
+
+      {loading && (
+        <p className="loading-message">
+          Loading vehicles...
+        </p>
+      )}
+
+      {pageError && (
+        <p className="page-error-message">
+          {pageError}
+        </p>
+      )}
 
       <div className="vehicles-table-card">
         <table className="vehicles-table">
@@ -258,7 +346,7 @@ export function VehiclesPage() {
               </tr>
             ))}
 
-            {vehicles.length === 0 && (
+            {vehicles.length === 0 && !loading && (
               <tr>
                 <td colSpan={8} className="empty-table-message">
                   No vehicles found.

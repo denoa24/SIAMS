@@ -26,12 +26,14 @@ let data = readData();
 let vehicles = data.vehicles;
 let accessRequests = data.accessRequests;
 let securityAlerts = data.securityAlerts;
+let rsus = data.rsus;
 
 const saveData = () => {
   writeData({
     vehicles,
     accessRequests,
     securityAlerts,
+    rsus,
   });
 };
 
@@ -232,16 +234,38 @@ app.get('/api/analytics', (req, res) => {
 app.post('/api/vehicles', (req, res) => {
   const { id, speed, location, rsu, certificate } = req.body;
 
+  if (!id || !location || speed === undefined || !rsu || !certificate) {
+    return res.status(400).json({
+      message: 'All fields are required.',
+    });
+  }
+
+  if (Number(speed) < 0) {
+    return res.status(400).json({
+      message: 'Speed cannot be negative.',
+    });
+  }
+
+  const vehicleAlreadyExists = vehicles.some(
+    (vehicle) => vehicle.id.toLowerCase() === id.toLowerCase()
+  );
+
+  if (vehicleAlreadyExists) {
+    return res.status(409).json({
+      message: 'Vehicle ID already exists.',
+    });
+  }
+
   const newVehicle = {
     id,
     status: certificate === 'Expired' ? 'Denied' : 'Authenticated',
-    speed,
+    speed: Number(speed),
     location,
     rsu,
     lastSeen: new Date().toLocaleTimeString('en-GB'),
     certificate,
-    lat: 44.40 + Math.random() * 0.1,
-    lng: 26.05 + Math.random() * 0.1
+    lat: 44.4 + Math.random() * 0.08,
+    lng: 26.05 + Math.random() * 0.12,
   };
 
   vehicles = [newVehicle, ...vehicles];
@@ -302,6 +326,54 @@ app.delete('/api/security-alerts/:id', (req, res) => {
   saveData();
 
   res.status(204).send();
+});
+
+app.get('/api/rsus', (req, res) => {
+  const updatedRsus = rsus.map((rsu) => {
+    const connectedVehicles = vehicles.filter(
+      (vehicle) => vehicle.rsu === rsu.id
+    ).length;
+
+    const deniedVehicles = vehicles.filter(
+      (vehicle) =>
+        vehicle.rsu === rsu.id &&
+        vehicle.status === 'Denied'
+    ).length;
+
+    const pendingVehicles = vehicles.filter(
+      (vehicle) =>
+        vehicle.rsu === rsu.id &&
+        vehicle.status === 'Pending'
+    ).length;
+
+    let health =
+      100 -
+      deniedVehicles * 15 -
+      pendingVehicles * 5;
+
+    if (health < 0) {
+      health = 0;
+    }
+
+    const status =
+      health >= 85
+        ? 'Online'
+        : health >= 65
+        ? 'Warning'
+        : 'Offline';
+
+    return {
+      ...rsu,
+      connectedVehicles,
+      deniedVehicles,
+      pendingVehicles,
+      health,
+      status,
+      lastSignal: new Date().toLocaleTimeString('en-GB'),
+    };
+  });
+
+  res.json(updatedRsus);
 });
 
 app.listen(PORT, () => {

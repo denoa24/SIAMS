@@ -164,15 +164,6 @@
   ],
   "securityAlerts": [
     {
-      "id": 5,
-      "title": "Unauthorized Access Attempt",
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "severity": "Critical",
-      "timestamp": "18:02:21",
-      "description": "Vehicle VH-4928 was denied access due to: Expired certificate."
-    },
-    {
       "id": 4,
       "title": "Unauthorized Access Attempt",
       "vehicleId": "VH-4928",
@@ -207,6 +198,24 @@
       "severity": "Critical",
       "timestamp": "17:29:22",
       "description": "Vehicle VH-2201 was denied access due to: Expired certificate."
+    }
+  ],
+  "rsus": [
+    {
+      "id": "RSU-02",
+      "location": "Bucharest - Sector 2"
+    },
+    {
+      "id": "RSU-04",
+      "location": "Bucharest - Sector 1"
+    },
+    {
+      "id": "RSU-09",
+      "location": "Bucharest - Sector 5"
+    },
+    {
+      "id": "RSU-11",
+      "location": "Bucharest - Sector 3"
     }
   ]
 }

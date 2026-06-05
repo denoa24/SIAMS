@@ -39,6 +39,10 @@ export function Sidebar() {
         <NavLink to="/live-map" className="nav-button">
           Live Map
         </NavLink>
+
+        <NavLink to="/rsu-monitoring" className="nav-button">
+          RSU Monitoring
+        </NavLink>
       </nav>
 
       <div className="system-status">
