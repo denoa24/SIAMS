@@ -48,6 +48,16 @@ export function AccessRequestsPage() {
     await loadRequests();
   };
 
+  const approveRequest = async (requestId: number) => {
+    await api.put(`/access-requests/${requestId}/approve`);
+    await loadRequests();
+  };
+
+  const rejectRequest = async (requestId: number) => {
+    await api.put(`/access-requests/${requestId}/reject`);
+    await loadRequests();
+  };
+
   const resetFilters = async () => {
     setSearch('');
     setSelectedStatus('');
@@ -64,11 +74,17 @@ export function AccessRequestsPage() {
   }, []);
 
   const totalRequests = requests.length;
+
   const grantedRequests = requests.filter(
     (request) => request.status === 'Granted'
   ).length;
+
   const deniedRequests = requests.filter(
     (request) => request.status === 'Denied'
+  ).length;
+
+  const pendingRequests = requests.filter(
+    (request) => request.status === 'Pending'
   ).length;
 
   return (
@@ -92,6 +108,11 @@ export function AccessRequestsPage() {
         <div className="summary-card denied-card">
           <h3>Denied</h3>
           <p>{deniedRequests}</p>
+        </div>
+
+        <div className="summary-card pending-card">
+          <h3>Pending</h3>
+          <p>{pendingRequests}</p>
         </div>
       </div>
 
@@ -156,6 +177,7 @@ export function AccessRequestsPage() {
               <th>Status</th>
               <th>Timestamp</th>
               <th>Reason</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
@@ -163,7 +185,11 @@ export function AccessRequestsPage() {
             {requests.map((request) => (
               <tr key={request.id}>
                 <td>{request.id}</td>
-                <td className="vehicle-column">{request.vehicleId}</td>
+
+                <td className="vehicle-column">
+                  {request.vehicleId}
+                </td>
+
                 <td>{request.rsuId}</td>
 
                 <td>
@@ -173,13 +199,38 @@ export function AccessRequestsPage() {
                 </td>
 
                 <td>{request.timestamp}</td>
+
                 <td>{request.reason}</td>
+
+                <td>
+                  {request.status === 'Pending' ? (
+                    <div className="request-actions">
+                      <button
+                        className="approve-request-button"
+                        onClick={() => approveRequest(request.id)}
+                      >
+                        Approve
+                      </button>
+
+                      <button
+                        className="reject-request-button"
+                        onClick={() => rejectRequest(request.id)}
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  ) : (
+                    <span className="no-action-text">
+                      No action
+                    </span>
+                  )}
+                </td>
               </tr>
             ))}
 
             {requests.length === 0 && (
               <tr>
-                <td colSpan={6} className="empty-table-message">
+                <td colSpan={7} className="empty-table-message">
                   No access requests found.
                 </td>
               </tr>

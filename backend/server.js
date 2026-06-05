@@ -409,6 +409,71 @@ app.get('/api/analytics', (req, res) => {
   });
 });
 
+app.put('/api/access-requests/:id/approve', (req, res) => {
+  const requestId = Number(req.params.id);
+
+  const request = accessRequests.find((request) => request.id === requestId);
+
+  if (!request) {
+    return res.status(404).json({ message: 'Access request not found.' });
+  }
+
+  request.status = 'Granted';
+  request.reason = 'Manually approved by administrator';
+
+  const vehicle = vehicles.find(
+    (vehicle) => vehicle.id === request.vehicleId
+  );
+
+  if (vehicle) {
+    vehicle.status = 'Authenticated';
+    vehicle.certificate = 'Valid';
+    vehicle.lastSeen = new Date().toLocaleTimeString('en-GB');
+  }
+
+  saveData();
+
+  res.json(request);
+});
+
+app.put('/api/access-requests/:id/reject', (req, res) => {
+  const requestId = Number(req.params.id);
+
+  const request = accessRequests.find((request) => request.id === requestId);
+
+  if (!request) {
+    return res.status(404).json({ message: 'Access request not found.' });
+  }
+
+  request.status = 'Denied';
+  request.reason = 'Manually rejected by administrator';
+
+  const vehicle = vehicles.find(
+    (vehicle) => vehicle.id === request.vehicleId
+  );
+
+  if (vehicle) {
+    vehicle.status = 'Denied';
+    vehicle.lastSeen = new Date().toLocaleTimeString('en-GB');
+  }
+
+  const newAlert = {
+    id: securityAlerts.length + 1,
+    title: 'Manual Access Rejection',
+    vehicleId: request.vehicleId,
+    rsuId: request.rsuId,
+    severity: 'High',
+    timestamp: new Date().toLocaleTimeString('en-GB'),
+    description: `Vehicle ${request.vehicleId} was manually rejected by the administrator.`,
+  };
+
+  securityAlerts = [newAlert, ...securityAlerts];
+
+  saveData();
+
+  res.json(request);
+});
+
 app.listen(PORT, () => {
   console.log(`SIAMS backend running on http://localhost:${PORT}`);
 });
