@@ -29,24 +29,12 @@ type SecurityAlert = {
   description: string;
 };
 
-type Vehicle = {
-  id: string;
-  status: 'Authenticated' | 'Denied' | 'Pending';
-  speed: number;
-  location: string;
-  rsu: string;
-  lastSeen: string;
-  certificate: 'Valid' | 'Expired';
-};
-
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [securityAlerts, setSecurityAlerts] = useState<SecurityAlert[]>([]);
 
-  const [vehicleSearch, setVehicleSearch] = useState('');
-  const [searchResult, setSearchResult] = useState<Vehicle | null>(null);
-  const [searchMessage, setSearchMessage] = useState('');
+  const [isSimulationRunning, setIsSimulationRunning] = useState(false);
 
   const loadDashboardData = async () => {
     const statsResponse = await api.get('/dashboard/stats');
@@ -64,23 +52,8 @@ export function DashboardPage() {
     await loadDashboardData();
   };
 
-  const searchVehicle = async () => {
-    setSearchMessage('');
-    setSearchResult(null);
-
-    if (!vehicleSearch.trim()) {
-      setSearchMessage('Please enter a vehicle ID.');
-      return;
-    }
-
-    const response = await api.get(`/vehicles?search=${vehicleSearch.trim()}`);
-
-    if (response.data.length === 0) {
-      setSearchMessage('No vehicle found.');
-      return;
-    }
-
-    setSearchResult(response.data[0]);
+  const toggleSimulation = () => {
+    setIsSimulationRunning((currentValue) => !currentValue);
   };
 
   useEffect(() => {
@@ -115,6 +88,18 @@ export function DashboardPage() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (!isSimulationRunning) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      simulateAccess();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isSimulationRunning]);
+
   return (
     <div className="dashboard-page">
       <Sidebar />
@@ -133,53 +118,10 @@ export function DashboardPage() {
               type="text"
               placeholder="Search vehicle..."
               className="search-input"
-              value={vehicleSearch}
-              onChange={(event) => setVehicleSearch(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  searchVehicle();
-                }
-              }}
             />
 
-            <button className="search-button" onClick={searchVehicle}>
-              Search
-            </button>
+            <button className="search-button">Search</button>
           </div>
-          {searchMessage && (
-            <p className="dashboard-search-message">
-              {searchMessage}
-            </p>
-          )}
-
-          {searchResult && (
-            <div className="dashboard-search-result">
-              <div>
-                <span>Vehicle ID</span>
-                <strong>{searchResult.id}</strong>
-              </div>
-
-              <div>
-                <span>Status</span>
-                <strong>{searchResult.status}</strong>
-              </div>
-
-              <div>
-                <span>Certificate</span>
-                <strong>{searchResult.certificate}</strong>
-              </div>
-
-              <div>
-                <span>RSU</span>
-                <strong>{searchResult.rsu}</strong>
-              </div>
-
-              <div>
-                <span>Location</span>
-                <strong>{searchResult.location}</strong>
-              </div>
-            </div>
-          )}
         </div>
 
         <section className="stats-grid">
@@ -234,9 +176,22 @@ export function DashboardPage() {
                 </p>
               </div>
 
-              <button className="search-button" onClick={simulateAccess}>
-                Simulate Access
-              </button>
+              <div className="simulation-actions">
+                <button className="search-button" onClick={simulateAccess}>
+                  Simulate Once
+                </button>
+
+                <button
+                  className={
+                    isSimulationRunning
+                      ? 'simulation-stop-button'
+                      : 'simulation-start-button'
+                  }
+                  onClick={toggleSimulation}
+                >
+                  {isSimulationRunning ? 'Stop Simulation' : 'Start Simulation'}
+                </button>
+              </div>
             </div>
 
             <div className="table-container">
