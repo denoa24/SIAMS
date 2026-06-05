@@ -238,35 +238,35 @@ app.get('/api/dashboard/stats', (req, res) => {
 });
 
 app.get('/api/analytics', (req, res) => {
-  const totalRequests = accessRequests.length;
-
-  const grantedRequests = accessRequests.filter(
-    (request) => request.status === 'Granted'
+  const authenticatedVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === 'Authenticated'
   ).length;
 
-  const deniedRequests = accessRequests.filter(
-    (request) => request.status === 'Denied'
+  const deniedVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === 'Denied'
   ).length;
 
-  const successRate =
-    totalRequests === 0
-      ? 0
-      : Math.round((grantedRequests / totalRequests) * 100);
+  const pendingVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === 'Pending'
+  ).length;
 
-  const deniedRate =
-    totalRequests === 0
-      ? 0
-      : Math.round((deniedRequests / totalRequests) * 100);
+  const validCertificates = vehicles.filter(
+    (vehicle) => vehicle.certificate === 'Valid'
+  ).length;
+
+  const expiredCertificates = vehicles.filter(
+    (vehicle) => vehicle.certificate === 'Expired'
+  ).length;
 
   res.json({
-    totalRequests,
-    grantedRequests,
-    deniedRequests,
-    successRate,
-    deniedRate,
     totalVehicles: vehicles.length,
+    authenticatedVehicles,
+    deniedVehicles,
+    pendingVehicles,
+    validCertificates,
+    expiredCertificates,
+    totalRequests: accessRequests.length,
     totalAlerts: securityAlerts.length,
-    activeRSUs: new Set(vehicles.map((vehicle) => vehicle.rsu)).size,
   });
 });
 
@@ -417,38 +417,6 @@ app.get('/api/rsus', (req, res) => {
   res.json(updatedRsus);
 });
 
-app.get('/api/analytics', (req, res) => {
-  const authenticatedVehicles = vehicles.filter(
-    (vehicle) => vehicle.status === 'Authenticated'
-  ).length;
-
-  const deniedVehicles = vehicles.filter(
-    (vehicle) => vehicle.status === 'Denied'
-  ).length;
-
-  const pendingVehicles = vehicles.filter(
-    (vehicle) => vehicle.status === 'Pending'
-  ).length;
-
-  const validCertificates = vehicles.filter(
-    (vehicle) => vehicle.certificate === 'Valid'
-  ).length;
-
-  const expiredCertificates = vehicles.filter(
-    (vehicle) => vehicle.certificate === 'Expired'
-  ).length;
-
-  res.json({
-    totalVehicles: vehicles.length,
-    authenticatedVehicles,
-    deniedVehicles,
-    pendingVehicles,
-    validCertificates,
-    expiredCertificates,
-    totalRequests: accessRequests.length,
-    totalAlerts: securityAlerts.length,
-  });
-});
 
 app.put('/api/access-requests/:id/approve', (req, res) => {
   const requestId = Number(req.params.id);
