@@ -58,6 +58,38 @@
   ],
   "accessRequests": [
     {
+      "id": 25,
+      "vehicleId": "VH-3815",
+      "rsuId": "RSU-02",
+      "timestamp": "14:06:42",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 24,
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "timestamp": "14:06:41",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 23,
+      "vehicleId": "VH-3815",
+      "rsuId": "RSU-02",
+      "timestamp": "14:06:41",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 22,
+      "vehicleId": "VH-5732",
+      "rsuId": "RSU-04",
+      "timestamp": "14:06:40",
+      "status": "Pending",
+      "reason": "Additional validation required"
+    },
+    {
       "id": 21,
       "vehicleId": "VH-5732",
       "rsuId": "RSU-04",
@@ -228,67 +260,13 @@
   ],
   "securityAlerts": [
     {
-      "id": 7,
-      "title": "Manual Access Rejection",
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "severity": "High",
-      "timestamp": "13:45:45",
-      "description": "Vehicle VH-6844 was manually rejected by the administrator."
-    },
-    {
-      "id": 6,
-      "title": "Unauthorized Access Attempt",
-      "vehicleId": "VH-2001",
-      "rsuId": "RSU-04",
-      "severity": "Critical",
-      "timestamp": "13:45:05",
-      "description": "Vehicle VH-2001 was denied access due to: Expired certificate."
-    },
-    {
-      "id": 5,
-      "title": "Unauthorized Access Attempt",
-      "vehicleId": "VH-2001",
-      "rsuId": "RSU-04",
-      "severity": "Critical",
-      "timestamp": "13:45:02",
-      "description": "Vehicle VH-2001 was denied access due to: Expired certificate."
-    },
-    {
-      "id": 4,
+      "id": 1,
       "title": "Unauthorized Access Attempt",
       "vehicleId": "VH-4928",
       "rsuId": "RSU-11",
       "severity": "Critical",
-      "timestamp": "18:01:51",
+      "timestamp": "14:06:41",
       "description": "Vehicle VH-4928 was denied access due to: Expired certificate."
-    },
-    {
-      "id": 3,
-      "title": "Unauthorized Access Attempt",
-      "vehicleId": "VH-2201",
-      "rsuId": "RSU-11",
-      "severity": "Critical",
-      "timestamp": "17:29:23",
-      "description": "Vehicle VH-2201 was denied access due to: Expired certificate."
-    },
-    {
-      "id": 2,
-      "title": "Unauthorized Access Attempt",
-      "vehicleId": "VH-2201",
-      "rsuId": "RSU-11",
-      "severity": "Critical",
-      "timestamp": "17:29:23",
-      "description": "Vehicle VH-2201 was denied access due to: Expired certificate."
-    },
-    {
-      "id": 1,
-      "title": "Unauthorized Access Attempt",
-      "vehicleId": "VH-2201",
-      "rsuId": "RSU-11",
-      "severity": "Critical",
-      "timestamp": "17:29:22",
-      "description": "Vehicle VH-2201 was denied access due to: Expired certificate."
     }
   ],
   "rsus": [

@@ -180,12 +180,18 @@ export function VehiclesPage() {
           onChange={(event) => setVehicleId(event.target.value)}
         />
 
-        <input
-          type="text"
-          placeholder="Location"
+        <select
           value={location}
           onChange={(event) => setLocation(event.target.value)}
-        />
+        >
+          <option value="">Select location</option>
+          <option value="Bucharest - Sector 1">Bucharest - Sector 1</option>
+          <option value="Bucharest - Sector 2">Bucharest - Sector 2</option>
+          <option value="Bucharest - Sector 3">Bucharest - Sector 3</option>
+          <option value="Bucharest - Sector 4">Bucharest - Sector 4</option>
+          <option value="Bucharest - Sector 5">Bucharest - Sector 5</option>
+          <option value="Bucharest - Sector 6">Bucharest - Sector 6</option>
+        </select>
 
         <input
           type="number"
@@ -318,9 +324,8 @@ export function VehiclesPage() {
 
                 <td>
                   <span
-                    className={`certificate-badge ${
-                      vehicle.certificate === 'Valid' ? 'valid' : 'expired'
-                    }`}
+                    className={`certificate-badge ${vehicle.certificate === 'Valid' ? 'valid' : 'expired'
+                      }`}
                   >
                     {vehicle.certificate}
                   </span>

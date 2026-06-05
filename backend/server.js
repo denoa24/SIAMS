@@ -37,6 +37,45 @@ const saveData = () => {
   });
 };
 
+// helper live map
+const getCoordinatesByLocation = (location) => {
+  const sectorCoordinates = {
+    'Bucharest - Sector 1': {
+      lat: 44.4595,
+      lng: 26.0893,
+    },
+    'Bucharest - Sector 2': {
+      lat: 44.4527,
+      lng: 26.1381,
+    },
+    'Bucharest - Sector 3': {
+      lat: 44.4231,
+      lng: 26.1685,
+    },
+    'Bucharest - Sector 4': {
+      lat: 44.4050,
+      lng: 26.1250,
+    },
+    'Bucharest - Sector 5': {
+      lat: 44.4017,
+      lng: 26.0826,
+    },
+    'Bucharest - Sector 6': {
+      lat: 44.4388,
+      lng: 26.0412,
+    },
+  };
+
+  const selectedLocation =
+    sectorCoordinates[location] ||
+    sectorCoordinates['Bucharest - Sector 1'];
+
+  return {
+    lat: selectedLocation.lat + (Math.random() - 0.5) * 0.015,
+    lng: selectedLocation.lng + (Math.random() - 0.5) * 0.015,
+  };
+};
+
 app.get('/', (req, res) => {
   res.send('SIAMS backend is running');
 });
@@ -256,6 +295,8 @@ app.post('/api/vehicles', (req, res) => {
     });
   }
 
+  const coordinates = getCoordinatesByLocation(location);
+
   const newVehicle = {
     id,
     status: certificate === 'Expired' ? 'Denied' : 'Authenticated',
@@ -264,8 +305,8 @@ app.post('/api/vehicles', (req, res) => {
     rsu,
     lastSeen: new Date().toLocaleTimeString('en-GB'),
     certificate,
-    lat: 44.4 + Math.random() * 0.08,
-    lng: 26.05 + Math.random() * 0.12,
+    lat: coordinates.lat,
+    lng: coordinates.lng,
   };
 
   vehicles = [newVehicle, ...vehicles];
@@ -359,8 +400,8 @@ app.get('/api/rsus', (req, res) => {
       health >= 85
         ? 'Online'
         : health >= 65
-        ? 'Warning'
-        : 'Offline';
+          ? 'Warning'
+          : 'Offline';
 
     return {
       ...rsu,
