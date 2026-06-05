@@ -421,7 +421,7 @@ app.put('/api/access-requests/:id/approve', (req, res) => {
   request.status = 'Granted';
   request.reason = 'Manually approved by administrator';
 
-  let vehicle = vehicles.find(
+  const vehicle = vehicles.find(
     (vehicle) => vehicle.id === request.vehicleId
   );
 
@@ -429,20 +429,6 @@ app.put('/api/access-requests/:id/approve', (req, res) => {
     vehicle.status = 'Authenticated';
     vehicle.certificate = 'Valid';
     vehicle.lastSeen = new Date().toLocaleTimeString('en-GB');
-  } else {
-    vehicle = {
-      id: request.vehicleId,
-      status: 'Authenticated',
-      speed: Math.floor(Math.random() * 80) + 20,
-      location: 'Bucharest - Unknown Area',
-      rsu: request.rsuId,
-      lastSeen: new Date().toLocaleTimeString('en-GB'),
-      certificate: 'Valid',
-      lat: 44.4 + Math.random() * 0.08,
-      lng: 26.05 + Math.random() * 0.12,
-    };
-
-    vehicles = [vehicle, ...vehicles];
   }
 
   saveData();

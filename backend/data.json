@@ -6,7 +6,7 @@
       "speed": 57,
       "location": "Bucharest - Sector 1",
       "rsu": "RSU-04",
-      "lastSeen": "12:31:30",
+      "lastSeen": "15:12:08",
       "certificate": "Valid",
       "lat": 44.4595,
       "lng": 26.0893
@@ -35,22 +35,22 @@
     },
     {
       "id": "VH-5732",
-      "status": "Denied",
+      "status": "Authenticated",
       "speed": 69,
       "location": "Bucharest - Sector 6",
       "rsu": "RSU-04",
-      "lastSeen": "12:31:55",
+      "lastSeen": "13:45:18",
       "certificate": "Valid",
       "lat": 44.4388,
       "lng": 26.0412
     },
     {
       "id": "VH-6844",
-      "status": "Pending",
+      "status": "Denied",
       "speed": 31,
       "location": "Bucharest - Sector 5",
       "rsu": "RSU-09",
-      "lastSeen": "15:19:55",
+      "lastSeen": "13:45:45",
       "certificate": "Valid",
       "lat": 44.4017,
       "lng": 26.0826
@@ -61,65 +61,65 @@
       "id": 21,
       "vehicleId": "VH-5732",
       "rsuId": "RSU-04",
-      "timestamp": "12:31:50",
-      "status": "Denied",
-      "reason": "Manually rejected by administrator"
+      "timestamp": "13:45:06",
+      "status": "Granted",
+      "reason": "Manually approved by administrator"
     },
     {
       "id": 20,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "12:31:49",
+      "vehicleId": "VH-3815",
+      "rsuId": "RSU-02",
+      "timestamp": "13:45:05",
       "status": "Granted",
       "reason": "Vehicle authenticated successfully"
     },
     {
       "id": 19,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "12:31:47",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 18,
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "timestamp": "12:31:46",
+      "vehicleId": "VH-2001",
+      "rsuId": "RSU-04",
+      "timestamp": "13:45:05",
       "status": "Denied",
       "reason": "Expired certificate"
     },
     {
+      "id": 18,
+      "vehicleId": "VH-2407",
+      "rsuId": "RSU-04",
+      "timestamp": "13:45:04",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
       "id": 17,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "12:31:44",
+      "vehicleId": "VH-5732",
+      "rsuId": "RSU-04",
+      "timestamp": "13:45:04",
       "status": "Granted",
       "reason": "Vehicle authenticated successfully"
     },
     {
       "id": 16,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "12:31:43",
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "13:45:03",
       "status": "Granted",
       "reason": "Vehicle authenticated successfully"
     },
     {
       "id": 15,
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "timestamp": "12:31:37",
+      "vehicleId": "VH-2001",
+      "rsuId": "RSU-04",
+      "timestamp": "13:45:02",
       "status": "Denied",
       "reason": "Expired certificate"
     },
     {
       "id": 14,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "12:30:10",
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "13:45:01",
       "status": "Granted",
-      "reason": "Manually approved by administrator"
+      "reason": "Vehicle authenticated successfully"
     },
     {
       "id": 13,
@@ -142,8 +142,8 @@
       "vehicleId": "VH-6844",
       "rsuId": "RSU-09",
       "timestamp": "18:01:54",
-      "status": "Pending",
-      "reason": "Additional validation required"
+      "status": "Denied",
+      "reason": "Manually rejected by administrator"
     },
     {
       "id": 10,
@@ -230,29 +230,29 @@
     {
       "id": 7,
       "title": "Manual Access Rejection",
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
       "severity": "High",
-      "timestamp": "12:31:55",
-      "description": "Vehicle VH-5732 was manually rejected by the administrator."
+      "timestamp": "13:45:45",
+      "description": "Vehicle VH-6844 was manually rejected by the administrator."
     },
     {
       "id": 6,
       "title": "Unauthorized Access Attempt",
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
+      "vehicleId": "VH-2001",
+      "rsuId": "RSU-04",
       "severity": "Critical",
-      "timestamp": "12:31:46",
-      "description": "Vehicle VH-4928 was denied access due to: Expired certificate."
+      "timestamp": "13:45:05",
+      "description": "Vehicle VH-2001 was denied access due to: Expired certificate."
     },
     {
       "id": 5,
       "title": "Unauthorized Access Attempt",
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
+      "vehicleId": "VH-2001",
+      "rsuId": "RSU-04",
       "severity": "Critical",
-      "timestamp": "12:31:37",
-      "description": "Vehicle VH-4928 was denied access due to: Expired certificate."
+      "timestamp": "13:45:02",
+      "description": "Vehicle VH-2001 was denied access due to: Expired certificate."
     },
     {
       "id": 4,
