@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import logo from '../assets/siams-logo.png';
 import './Sidebar.css';
 
 const navItems = [
@@ -15,12 +16,14 @@ const navItems = [
 export function Sidebar() {
   return (
     <aside className="sidebar">
-      <div className="sidebar-logo-section">
-        <div className="sidebar-logo-box">S</div>
+      <div className="sidebar-brand">
+        <div className="sidebar-logo-wrapper">
+          <img src={logo} alt="SIAMS Logo" className="sidebar-logo-image" />
+        </div>
 
-        <div>
-          <h1 className="sidebar-title">SIAMS</h1>
-          <p className="sidebar-subtitle">V2I Security Platform</p>
+        <div className="sidebar-brand-text">
+          <h1>SIAMS</h1>
+          <p>Secure Intelligent Access Management System</p>
         </div>
       </div>
 

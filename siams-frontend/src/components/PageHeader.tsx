@@ -1,41 +1,40 @@
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/siams-logo.png';
 import './PageHeader.css';
 
 type PageHeaderProps = {
   title: string;
   description?: string;
-  icon?: string;
-  logoText?: string;
 };
 
 export function PageHeader({
   title,
-  description,
-  icon,
-  logoText = 'SIAMS',
+  description
 }: PageHeaderProps) {
   const navigate = useNavigate();
 
   return (
     <header className="page-header">
-      <div className="page-header-main">
-        <button className="back-button" onClick={() => navigate(-1)}>
-          ← Back
-        </button>
-
+      <div className="page-header-left">
         <div className="page-header-logo">
-          {icon ? (
-            <img src={icon} alt={`${title} icon`} />
-          ) : (
-            <span>{logoText}</span>
-          )}
+          <img src={logo} alt="SIAMS Logo" />
         </div>
 
         <div className="page-header-text">
           <h1>{title}</h1>
-          {description && <p>{description}</p>}
+
+          {description && (
+            <p>{description}</p>
+          )}
         </div>
       </div>
+
+      <button
+        className="page-header-back"
+        onClick={() => navigate(-1)}
+      >
+        ← Back
+      </button>
     </header>
   );
 }

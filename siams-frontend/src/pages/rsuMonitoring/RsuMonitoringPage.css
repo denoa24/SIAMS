@@ -1,30 +1,49 @@
 .rsu-page {
   color: #f8fafc;
+  width: 100%;
+  min-width: 0;
 }
 
 .rsu-summary-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 
 .rsu-summary-card {
-  background: #1e293b;
+  background: linear-gradient(180deg, #1e293b, #111827);
   border: 1px solid #334155;
-  border-radius: 22px;
+  border-radius: 24px;
   padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.rsu-summary-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(0, 194, 255, 0.15), transparent 35%);
+  pointer-events: none;
+}
+
+.rsu-summary-card h3,
+.rsu-summary-card p {
+  position: relative;
 }
 
 .rsu-summary-card h3 {
-  color: #94a3b8;
+  color: #cbd5e1;
   font-size: 14px;
-  margin-bottom: 12px;
+  margin: 0 0 12px;
 }
 
 .rsu-summary-card p {
-  font-size: 36px;
-  font-weight: 800;
+  font-size: 38px;
+  font-weight: 900;
+  margin: 0;
+  color: #ffffff;
 }
 
 .online-border {
@@ -46,26 +65,28 @@
 }
 
 .rsu-card {
-  background: #1e293b;
+  background: linear-gradient(180deg, #1e293b, #111827);
   border: 1px solid #334155;
-  border-radius: 24px;
+  border-radius: 26px;
   padding: 24px;
 }
 
 .rsu-card-header {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 18px;
   margin-bottom: 24px;
 }
 
 .rsu-card-header h2 {
-  font-size: 26px;
+  font-size: 28px;
+  margin: 0;
+  color: #f8fafc;
 }
 
 .rsu-card-header p {
-  color: #94a3b8;
-  margin-top: 6px;
+  color: #cbd5e1;
+  margin: 6px 0 0;
 }
 
 .rsu-status {
@@ -73,62 +94,69 @@
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 900;
+  white-space: nowrap;
 }
 
 .rsu-status.online {
-  background: rgba(34, 197, 94, 0.15);
+  background: rgba(34, 197, 94, 0.16);
   color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.35);
 }
 
 .rsu-status.warning {
-  background: rgba(245, 158, 11, 0.15);
+  background: rgba(245, 158, 11, 0.16);
   color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
 }
 
 .rsu-status.offline {
-  background: rgba(239, 68, 68, 0.15);
+  background: rgba(239, 68, 68, 0.16);
   color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.35);
 }
 
 .rsu-details {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
 }
 
 .rsu-details div {
   background: #0f172a;
   border: 1px solid #334155;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 16px;
 }
 
 .rsu-details span,
 .health-info span {
   display: block;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-size: 13px;
   margin-bottom: 8px;
 }
 
 .rsu-details strong,
 .health-info strong {
-  font-size: 20px;
+  color: #ffffff;
+  font-size: 22px;
 }
 
 .health-section {
-  margin-top: 22px;
+  margin-top: 10px;
 }
 
 .health-info {
   display: flex;
   justify-content: space-between;
+  gap: 14px;
   margin-bottom: 10px;
 }
 
 .health-bar {
-  height: 14px;
+  height: 16px;
   background: #0f172a;
   border: 1px solid #334155;
   border-radius: 999px;
@@ -138,30 +166,50 @@
 .health-fill {
   height: 100%;
   border-radius: 999px;
+  transition: width 0.3s ease;
 }
 
 .good-health {
-  background: #22c55e;
+  background: linear-gradient(90deg, #22c55e, #4ade80);
 }
 
 .medium-health {
-  background: #f59e0b;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
 }
 
 .bad-health {
-  background: #ef4444;
+  background: linear-gradient(90deg, #ef4444, #f87171);
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
   .rsu-summary-grid,
   .rsu-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .rsu-details {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
+  .rsu-page {
+    padding-bottom: 90px;
+  }
+
   .rsu-summary-grid,
-  .rsu-grid {
+  .rsu-grid,
+  .rsu-details {
     grid-template-columns: 1fr;
+  }
+
+  .rsu-summary-card,
+  .rsu-card {
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .rsu-card-header {
+    flex-direction: column;
   }
 }

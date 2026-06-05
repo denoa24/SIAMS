@@ -12,6 +12,8 @@ type Rsu = {
   connectedVehicles: number;
   health: number;
   lastSignal: string;
+  deniedVehicles?: number;
+  pendingVehicles?: number;
 };
 
 export function RsuMonitoringPage() {
@@ -76,6 +78,10 @@ export function RsuMonitoringPage() {
                 <span>Last Signal</span>
                 <strong>{rsu.lastSignal}</strong>
               </div>
+              <div>
+                <span>Denied Vehicles</span>
+                <strong>{rsu.deniedVehicles ?? 0}</strong>
+              </div>
             </div>
 
             <div className="health-section">
@@ -86,13 +92,12 @@ export function RsuMonitoringPage() {
 
               <div className="health-bar">
                 <div
-                  className={`health-fill ${
-                    rsu.health >= 80
-                      ? 'good-health'
-                      : rsu.health >= 60
+                  className={`health-fill ${rsu.health >= 80
+                    ? 'good-health'
+                    : rsu.health >= 60
                       ? 'medium-health'
                       : 'bad-health'
-                  }`}
+                    }`}
                   style={{ width: `${rsu.health}%` }}
                 ></div>
               </div>

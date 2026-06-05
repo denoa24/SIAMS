@@ -71,7 +71,6 @@ export function LiveMapPage() {
       <PageHeader
         title="Live Map"
         description="Real-time visualization of connected vehicles and V2I communication."
-        logoText="MAP"
       />
 
       <div className="map-dashboard-grid">

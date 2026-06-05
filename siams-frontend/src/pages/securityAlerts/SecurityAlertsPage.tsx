@@ -91,7 +91,6 @@ export function SecurityAlertsPage() {
       <PageHeader
         title="Security Alerts"
         description="Monitor suspicious activities, authentication failures and communication anomalies."
-        logoText="SEC"
       />
 
       <div className="security-filters">

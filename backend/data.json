@@ -2,22 +2,22 @@
   "vehicles": [
     {
       "id": "VH-2407",
-      "status": "Denied",
+      "status": "Authenticated",
       "speed": 57,
       "location": "Bucharest - Sector 1",
       "rsu": "RSU-04",
-      "lastSeen": "16:12:46",
+      "lastSeen": "17:55:07",
       "certificate": "Valid",
       "lat": 44.4595,
       "lng": 26.0893
     },
     {
       "id": "VH-3815",
-      "status": "Pending",
+      "status": "Authenticated",
       "speed": 24,
       "location": "Bucharest - Sector 2",
       "rsu": "RSU-02",
-      "lastSeen": "15:14:22",
+      "lastSeen": "17:54:47",
       "certificate": "Valid",
       "lat": 44.4527,
       "lng": 26.1381
@@ -57,6 +57,30 @@
     }
   ],
   "accessRequests": [
+    {
+      "id": 13,
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "17:55:32",
+      "status": "Pending",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 12,
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "17:55:31",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 11,
+      "vehicleId": "VH-2407",
+      "rsuId": "RSU-04",
+      "timestamp": "17:55:31",
+      "status": "Pending",
+      "reason": "Additional validation required"
+    },
     {
       "id": 10,
       "vehicleId": "VH-2407",
@@ -134,8 +158,8 @@
       "vehicleId": "VH-3815",
       "rsuId": "RSU-02",
       "timestamp": "16:12:13",
-      "status": "Pending",
-      "reason": "Additional validation required"
+      "status": "Granted",
+      "reason": "Manually approved by administrator"
     }
   ],
   "securityAlerts": [
