@@ -376,6 +376,39 @@ app.get('/api/rsus', (req, res) => {
   res.json(updatedRsus);
 });
 
+app.get('/api/analytics', (req, res) => {
+  const authenticatedVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === 'Authenticated'
+  ).length;
+
+  const deniedVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === 'Denied'
+  ).length;
+
+  const pendingVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === 'Pending'
+  ).length;
+
+  const validCertificates = vehicles.filter(
+    (vehicle) => vehicle.certificate === 'Valid'
+  ).length;
+
+  const expiredCertificates = vehicles.filter(
+    (vehicle) => vehicle.certificate === 'Expired'
+  ).length;
+
+  res.json({
+    totalVehicles: vehicles.length,
+    authenticatedVehicles,
+    deniedVehicles,
+    pendingVehicles,
+    validCertificates,
+    expiredCertificates,
+    totalRequests: accessRequests.length,
+    totalAlerts: securityAlerts.length,
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`SIAMS backend running on http://localhost:${PORT}`);
 });

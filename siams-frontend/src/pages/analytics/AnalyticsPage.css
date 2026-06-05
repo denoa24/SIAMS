@@ -231,3 +231,15 @@
     gap: 10px;
   }
 }
+
+.denied-fill {
+  background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+.pending-fill {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.loading-message {
+  color: #67e8f9;
+}

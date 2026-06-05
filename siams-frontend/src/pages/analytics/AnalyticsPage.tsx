@@ -4,14 +4,14 @@ import { api } from '../../services/api';
 import './AnalyticsPage.css';
 
 type AnalyticsData = {
-  totalRequests: number;
-  grantedRequests: number;
-  deniedRequests: number;
-  successRate: number;
-  deniedRate: number;
   totalVehicles: number;
+  authenticatedVehicles: number;
+  deniedVehicles: number;
+  pendingVehicles: number;
+  validCertificates: number;
+  expiredCertificates: number;
+  totalRequests: number;
   totalAlerts: number;
-  activeRSUs: number;
 };
 
 export function AnalyticsPage() {
@@ -31,35 +31,64 @@ export function AnalyticsPage() {
           description="Analyze authentication activity, RSU load and system performance."
         />
 
-        <p>Loading analytics...</p>
+        <p className="loading-message">Loading analytics...</p>
       </div>
     );
   }
 
+  const successRate =
+    analytics.totalVehicles === 0
+      ? 0
+      : Math.round(
+          (analytics.authenticatedVehicles / analytics.totalVehicles) * 100
+        );
+
+  const deniedRate =
+    analytics.totalVehicles === 0
+      ? 0
+      : Math.round((analytics.deniedVehicles / analytics.totalVehicles) * 100);
+
+  const pendingRate =
+    analytics.totalVehicles === 0
+      ? 0
+      : Math.round((analytics.pendingVehicles / analytics.totalVehicles) * 100);
+
+  const validCertificateRate =
+    analytics.totalVehicles === 0
+      ? 0
+      : Math.round((analytics.validCertificates / analytics.totalVehicles) * 100);
+
+  const expiredCertificateRate =
+    analytics.totalVehicles === 0
+      ? 0
+      : Math.round(
+          (analytics.expiredCertificates / analytics.totalVehicles) * 100
+        );
+
   const metrics = [
     {
-      title: 'Authentication Success Rate',
-      value: `${analytics.successRate}%`,
-      trend: `${analytics.grantedRequests} granted requests`,
+      title: 'Total Vehicles',
+      value: `${analytics.totalVehicles}`,
+      trend: 'Connected vehicles registered in SIAMS',
+      type: 'info',
+    },
+    {
+      title: 'Authenticated Vehicles',
+      value: `${analytics.authenticatedVehicles}`,
+      trend: `${successRate}% of total vehicles`,
       type: 'success',
     },
     {
-      title: 'Denied Requests',
-      value: `${analytics.deniedRequests}`,
-      trend: `${analytics.deniedRate}% denied rate`,
+      title: 'Denied Vehicles',
+      value: `${analytics.deniedVehicles}`,
+      trend: `${deniedRate}% of total vehicles`,
       type: 'danger',
     },
     {
-      title: 'Total Security Alerts',
+      title: 'Security Alerts',
       value: `${analytics.totalAlerts}`,
-      trend: 'Generated from denied requests',
+      trend: 'Generated from denied access events',
       type: 'warning',
-    },
-    {
-      title: 'Active RSUs',
-      value: `${analytics.activeRSUs}`,
-      trend: `${analytics.totalVehicles} connected vehicles`,
-      type: 'info',
     },
   ] as const;
 
@@ -82,34 +111,48 @@ export function AnalyticsPage() {
 
       <section className="analytics-grid">
         <div className="analytics-card">
-          <h2>Authentication Overview</h2>
-          <p>Current success and denied request distribution.</p>
+          <h2>Vehicle Status Distribution</h2>
+          <p>Current distribution of vehicles by authentication state.</p>
 
           <div className="horizontal-chart">
             <div className="horizontal-bar-row">
               <div className="horizontal-bar-info">
-                <span>Granted Requests</span>
-                <strong>{analytics.successRate}%</strong>
+                <span>Authenticated</span>
+                <strong>{successRate}%</strong>
               </div>
 
               <div className="horizontal-bar-track">
                 <div
                   className="horizontal-bar-fill"
-                  style={{ width: `${analytics.successRate}%` }}
+                  style={{ width: `${successRate}%` }}
                 ></div>
               </div>
             </div>
 
             <div className="horizontal-bar-row">
               <div className="horizontal-bar-info">
-                <span>Denied Requests</span>
-                <strong>{analytics.deniedRate}%</strong>
+                <span>Denied</span>
+                <strong>{deniedRate}%</strong>
               </div>
 
               <div className="horizontal-bar-track">
                 <div
                   className="horizontal-bar-fill denied-fill"
-                  style={{ width: `${analytics.deniedRate}%` }}
+                  style={{ width: `${deniedRate}%` }}
+                ></div>
+              </div>
+            </div>
+
+            <div className="horizontal-bar-row">
+              <div className="horizontal-bar-info">
+                <span>Pending</span>
+                <strong>{pendingRate}%</strong>
+              </div>
+
+              <div className="horizontal-bar-track">
+                <div
+                  className="horizontal-bar-fill pending-fill"
+                  style={{ width: `${pendingRate}%` }}
                 ></div>
               </div>
             </div>
@@ -117,23 +160,57 @@ export function AnalyticsPage() {
         </div>
 
         <div className="analytics-card">
-          <h2>System Summary</h2>
-          <p>General backend-generated monitoring data.</p>
+          <h2>Certificate Overview</h2>
+          <p>Vehicle certificate validity inside the SIAMS system.</p>
 
-          <div className="performance-grid small-summary">
+          <div className="horizontal-chart">
+            <div className="horizontal-bar-row">
+              <div className="horizontal-bar-info">
+                <span>Valid Certificates</span>
+                <strong>{validCertificateRate}%</strong>
+              </div>
+
+              <div className="horizontal-bar-track">
+                <div
+                  className="horizontal-bar-fill"
+                  style={{ width: `${validCertificateRate}%` }}
+                ></div>
+              </div>
+            </div>
+
+            <div className="horizontal-bar-row">
+              <div className="horizontal-bar-info">
+                <span>Expired Certificates</span>
+                <strong>{expiredCertificateRate}%</strong>
+              </div>
+
+              <div className="horizontal-bar-track">
+                <div
+                  className="horizontal-bar-fill denied-fill"
+                  style={{ width: `${expiredCertificateRate}%` }}
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="analytics-card wide-card">
+          <h2>System Performance Summary</h2>
+
+          <div className="performance-grid">
             <div>
-              <span>Total Requests</span>
+              <span>Total Access Requests</span>
               <strong>{analytics.totalRequests}</strong>
             </div>
 
             <div>
-              <span>Granted</span>
-              <strong>{analytics.grantedRequests}</strong>
+              <span>Authenticated Vehicles</span>
+              <strong>{analytics.authenticatedVehicles}</strong>
             </div>
 
             <div>
-              <span>Denied</span>
-              <strong>{analytics.deniedRequests}</strong>
+              <span>Pending Vehicles</span>
+              <strong>{analytics.pendingVehicles}</strong>
             </div>
 
             <div>
