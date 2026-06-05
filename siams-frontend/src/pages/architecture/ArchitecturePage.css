@@ -1,124 +1,139 @@
 .architecture-page {
   color: #f8fafc;
+  width: 100%;
+  min-width: 0;
+}
+
+.architecture-overview-card,
+.architecture-flow-card,
+.data-flow-card {
+  background: linear-gradient(180deg, #1e293b, #111827);
+  border: 1px solid #334155;
+  border-radius: 26px;
+  padding: 26px;
+  margin-bottom: 24px;
 }
 
 .architecture-overview-card {
-  background: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 24px;
-  padding: 26px;
-  margin-bottom: 28px;
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 24px;
+  align-items: start;
 }
 
 .architecture-overview-card h2,
 .architecture-flow-card h2,
 .data-flow-card h2 {
+  color: #f8fafc;
   font-size: 26px;
-  margin-bottom: 10px;
+  margin: 0 0 12px;
 }
 
 .architecture-overview-card p {
-  color: #94a3b8;
-  line-height: 1.6;
-  max-width: 850px;
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 900px;
 }
 
 .architecture-status {
-  min-width: 220px;
   background: #0f172a;
   border: 1px solid #334155;
-  border-radius: 18px;
-  padding: 18px;
-  height: fit-content;
+  border-radius: 20px;
+  padding: 20px;
 }
 
 .architecture-status span {
   display: block;
-  color: #94a3b8;
+  color: #cbd5e1;
   margin-bottom: 10px;
+  font-size: 14px;
 }
 
 .architecture-status strong {
   color: #4ade80;
-  font-size: 20px;
-}
-
-.architecture-flow-card,
-.data-flow-card {
-  background: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 24px;
-  padding: 26px;
-  margin-bottom: 28px;
+  font-size: 22px;
 }
 
 .architecture-flow-diagram {
   margin-top: 26px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  gap: 14px;
 }
 
 .flow-layer-wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
 }
 
 .flow-layer {
   width: 100%;
-  max-width: 720px;
+  max-width: 780px;
   background: #0f172a;
   border: 1px solid #334155;
-  border-radius: 22px;
+  border-radius: 24px;
   padding: 24px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(0, 194, 255, 0.16), transparent 35%);
+  pointer-events: none;
+}
+
+.layer-number,
+.flow-layer h3,
+.flow-layer p {
   position: relative;
 }
 
 .layer-number {
-  width: 38px;
-  height: 38px;
-  background: #00c2ff;
-  color: #0b1120;
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #00c2ff, #2563eb);
+  color: #020617;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
+  font-weight: 900;
   margin: 0 auto 14px;
 }
 
 .flow-layer h3 {
   font-size: 22px;
-  margin-bottom: 10px;
+  margin: 0 0 10px;
+  color: #ffffff;
 }
 
 .flow-layer p {
-  color: #94a3b8;
+  color: #cbd5e1;
   line-height: 1.5;
+  margin: 0;
 }
 
 .flow-connector {
-  color: #00c2ff;
+  color: #67e8f9;
   font-size: 34px;
-  font-weight: bold;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .architecture-details-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .architecture-detail-card {
-  background: #1e293b;
+  background: linear-gradient(180deg, #1e293b, #111827);
   border: 1px solid #334155;
   border-radius: 24px;
   padding: 24px;
@@ -132,42 +147,47 @@
 }
 
 .detail-card-header span {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   background: rgba(0, 194, 255, 0.16);
   color: #67e8f9;
+  border: 1px solid rgba(0, 194, 255, 0.35);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .detail-card-header h3 {
   font-size: 20px;
+  margin: 0;
+  color: #f8fafc;
 }
 
 .architecture-detail-card p {
-  color: #94a3b8;
+  color: #cbd5e1;
   line-height: 1.5;
-  margin-bottom: 18px;
+  margin: 0 0 18px;
 }
 
 .architecture-detail-card ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .architecture-detail-card li {
   padding: 10px 0;
   border-top: 1px solid #334155;
-  color: #cbd5e1;
+  color: #e2e8f0;
 }
 
 .architecture-detail-card li::before {
-  content: '•';
+  content: "•";
   color: #00c2ff;
   margin-right: 10px;
+  font-weight: 900;
 }
 
 .data-flow-steps {
@@ -185,24 +205,30 @@
 }
 
 .data-step span {
-  width: 34px;
-  height: 34px;
-  background: #00c2ff;
-  color: #0b1120;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #00c2ff, #2563eb);
+  color: #020617;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
+  font-weight: 900;
   margin-bottom: 14px;
 }
 
 .data-step p {
-  color: #cbd5e1;
+  color: #e2e8f0;
   line-height: 1.5;
+  margin: 0;
 }
 
+/* Tablet */
 @media (max-width: 1100px) {
+  .architecture-overview-card {
+    grid-template-columns: 1fr;
+  }
+
   .architecture-details-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -210,15 +236,39 @@
   .data-flow-steps {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .architecture-overview-card {
-    flex-direction: column;
-  }
 }
 
+/* Mobile */
 @media (max-width: 700px) {
+  .architecture-page {
+    padding-bottom: 90px;
+  }
+
+  .architecture-overview-card,
+  .architecture-flow-card,
+  .data-flow-card,
+  .architecture-detail-card {
+    border-radius: 18px;
+    padding: 18px;
+  }
+
   .architecture-details-grid,
   .data-flow-steps {
     grid-template-columns: 1fr;
+  }
+
+  .architecture-overview-card h2,
+  .architecture-flow-card h2,
+  .data-flow-card h2 {
+    font-size: 22px;
+  }
+
+  .flow-layer {
+    border-radius: 18px;
+    padding: 18px;
+  }
+
+  .flow-connector {
+    font-size: 28px;
   }
 }
