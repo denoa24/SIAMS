@@ -58,6 +58,62 @@
   ],
   "accessRequests": [
     {
+      "id": 20,
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "timestamp": "18:25:29",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 19,
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "18:24:32",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 18,
+      "vehicleId": "VH-2407",
+      "rsuId": "RSU-04",
+      "timestamp": "18:24:27",
+      "status": "Pending",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 17,
+      "vehicleId": "VH-2407",
+      "rsuId": "RSU-04",
+      "timestamp": "18:24:22",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 16,
+      "vehicleId": "VH-2407",
+      "rsuId": "RSU-04",
+      "timestamp": "18:24:17",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 15,
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "18:24:12",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 14,
+      "vehicleId": "VH-3815",
+      "rsuId": "RSU-02",
+      "timestamp": "18:24:12",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
       "id": 13,
       "vehicleId": "VH-6844",
       "rsuId": "RSU-09",

@@ -29,12 +29,27 @@ type SecurityAlert = {
   description: string;
 };
 
+type Vehicle = {
+  id: string;
+  status: 'Authenticated' | 'Denied' | 'Pending';
+  speed: number;
+  location: string;
+  rsu: string;
+  lastSeen: string;
+  certificate: 'Valid' | 'Expired';
+};
+
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [securityAlerts, setSecurityAlerts] = useState<SecurityAlert[]>([]);
 
   const [isSimulationRunning, setIsSimulationRunning] = useState(false);
+  const [simulationCount, setSimulationCount] = useState(0);
+
+  const [vehicleSearch, setVehicleSearch] = useState('');
+  const [searchResult, setSearchResult] = useState<Vehicle | null>(null);
+  const [searchMessage, setSearchMessage] = useState('');
 
   const loadDashboardData = async () => {
     const statsResponse = await api.get('/dashboard/stats');
@@ -43,17 +58,37 @@ export function DashboardPage() {
     const activityResponse = await api.get('/dashboard/activity');
     setActivityLogs(activityResponse.data);
 
-    const alertsResponse = await api.get('/dashboard/alerts');
-    setSecurityAlerts(alertsResponse.data);
+    const alertsResponse = await api.get('/security-alerts');
+    setSecurityAlerts(alertsResponse.data.slice(0, 2));
   };
 
   const simulateAccess = async () => {
     await api.post('/access-requests/simulate');
+    setSimulationCount((current) => current + 1);
     await loadDashboardData();
   };
 
   const toggleSimulation = () => {
     setIsSimulationRunning((currentValue) => !currentValue);
+  };
+
+  const searchVehicle = async () => {
+    setSearchMessage('');
+    setSearchResult(null);
+
+    if (!vehicleSearch.trim()) {
+      setSearchMessage('Please enter a vehicle ID.');
+      return;
+    }
+
+    const response = await api.get(`/vehicles?search=${vehicleSearch.trim()}`);
+
+    if (response.data.length === 0) {
+      setSearchMessage('No vehicle found.');
+      return;
+    }
+
+    setSearchResult(response.data[0]);
   };
 
   useEffect(() => {
@@ -116,13 +151,71 @@ export function DashboardPage() {
           <div className="search-section">
             <input
               type="text"
-              placeholder="Search vehicle..."
+              placeholder="Search vehicle ID..."
               className="search-input"
+              value={vehicleSearch}
+              onChange={(event) => setVehicleSearch(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  searchVehicle();
+                }
+              }}
             />
 
-            <button className="search-button">Search</button>
+            <button className="search-button" onClick={searchVehicle}>
+              Search
+            </button>
           </div>
         </div>
+
+        <div className="simulation-status-banner">
+          <div
+            className={
+              isSimulationRunning
+                ? 'simulation-status running'
+                : 'simulation-status stopped'
+            }
+          >
+            <span className="simulation-status-dot"></span>
+
+            {isSimulationRunning
+              ? `Simulation Running • ${simulationCount} Events`
+              : `Simulation Stopped • ${simulationCount} Events`}
+          </div>
+        </div>
+
+        {searchMessage && (
+          <p className="dashboard-search-message">{searchMessage}</p>
+        )}
+
+        {searchResult && (
+          <div className="dashboard-search-result">
+            <div>
+              <span>Vehicle ID</span>
+              <strong>{searchResult.id}</strong>
+            </div>
+
+            <div>
+              <span>Status</span>
+              <strong>{searchResult.status}</strong>
+            </div>
+
+            <div>
+              <span>Certificate</span>
+              <strong>{searchResult.certificate}</strong>
+            </div>
+
+            <div>
+              <span>RSU</span>
+              <strong>{searchResult.rsu}</strong>
+            </div>
+
+            <div>
+              <span>Location</span>
+              <strong>{searchResult.location}</strong>
+            </div>
+          </div>
+        )}
 
         <section className="stats-grid">
           <div className="stat-card">
@@ -220,6 +313,12 @@ export function DashboardPage() {
                       <td>{log.timestamp}</td>
                     </tr>
                   ))}
+
+                  {activityLogs.length === 0 && (
+                    <tr>
+                      <td colSpan={4}>No activity yet.</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -230,36 +329,36 @@ export function DashboardPage() {
               <h3 className="panel-title">Security Alerts</h3>
 
               <div className="alerts-list">
-                <div className="alerts-list">
-                  {securityAlerts.length === 0 && (
-                    <p className="empty-alerts-message">No active security alerts.</p>
-                  )}
+                {securityAlerts.length === 0 && (
+                  <p className="empty-alerts-message">
+                    No active security alerts.
+                  </p>
+                )}
 
-                  {securityAlerts.map((alert) => (
-                    <div
-                      key={alert.id}
-                      className={`alert-card ${alert.severity === 'Critical' ? 'danger-alert' : 'warning-alert'
-                        }`}
+                {securityAlerts.map((alert) => (
+                  <div
+                    key={alert.id}
+                    className={`alert-card ${
+                      alert.severity === 'Critical'
+                        ? 'danger-alert'
+                        : 'warning-alert'
+                    }`}
+                  >
+                    <p
+                      className={`alert-title ${
+                        alert.severity === 'Critical'
+                          ? 'danger-text'
+                          : 'warning-text'
+                      }`}
                     >
-                      <p
-                        className={`alert-title ${alert.severity === 'Critical' ? 'danger-text' : 'warning-text'
-                          }`}
-                      >
-                        {alert.title}
-                      </p>
+                      {alert.title}
+                    </p>
 
-                      <p className="alert-description">{alert.description}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="alert-card warning-alert">
-                  <p className="alert-title warning-text">
-                    Expired Vehicle Certificate
-                  </p>
-                  <p className="alert-description">
-                    One or more vehicles require certificate renewal.
-                  </p>
-                </div>
+                    <p className="alert-description">
+                      {alert.description}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
 
