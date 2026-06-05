@@ -17,12 +17,11 @@ type SecurityAlert = {
 
 export function SecurityAlertsPage() {
   const [alerts, setAlerts] = useState<SecurityAlert[]>([]);
+  const [selectedAlert, setSelectedAlert] = useState<SecurityAlert | null>(null);
 
   const [search, setSearch] = useState('');
   const [selectedSeverity, setSelectedSeverity] = useState('');
   const [selectedRsu, setSelectedRsu] = useState('');
-
-  const [selectedAlert, setSelectedAlert] = useState<SecurityAlert | null>(null);
 
   const loadAlerts = async () => {
     const params = new URLSearchParams();
@@ -92,6 +91,7 @@ export function SecurityAlertsPage() {
       <PageHeader
         title="Security Alerts"
         description="Monitor suspicious activities, authentication failures and communication anomalies."
+        logoText="SEC"
       />
 
       <div className="security-filters">
@@ -196,57 +196,6 @@ export function SecurityAlertsPage() {
               </div>
             </div>
 
-            {selectedAlert && (
-              <div className="investigation-modal-overlay">
-                <div className="investigation-modal">
-                  <div className="investigation-header">
-                    <h2>Alert Investigation</h2>
-
-                    <button
-                      className="close-modal-button"
-                      onClick={() => setSelectedAlert(null)}
-                    >
-                      ✕
-                    </button>
-                  </div>
-
-                  <div className="investigation-content">
-                    <p>
-                      <strong>Alert:</strong> {selectedAlert.title}
-                    </p>
-
-                    <p>
-                      <strong>Vehicle ID:</strong> {selectedAlert.vehicleId}
-                    </p>
-
-                    <p>
-                      <strong>RSU:</strong> {selectedAlert.rsuId}
-                    </p>
-
-                    <p>
-                      <strong>Severity:</strong> {selectedAlert.severity}
-                    </p>
-
-                    <p>
-                      <strong>Timestamp:</strong> {selectedAlert.timestamp}
-                    </p>
-
-                    <p>
-                      <strong>Description:</strong> {selectedAlert.description}
-                    </p>
-
-                    <div className="investigation-recommendation">
-                      <h3>Recommended Action</h3>
-                      <p>
-                        Verify the vehicle certificate, review recent access attempts and
-                        temporarily restrict access if suspicious activity continues.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
             <div className="alert-actions">
               <button
                 className="investigate-button"
@@ -273,6 +222,58 @@ export function SecurityAlertsPage() {
           </div>
         )}
       </div>
+
+      {selectedAlert && (
+        <div className="investigation-modal-overlay">
+          <div className="investigation-modal">
+            <div className="investigation-header">
+              <h2>Alert Investigation</h2>
+
+              <button
+                className="close-modal-button"
+                onClick={() => setSelectedAlert(null)}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="investigation-content">
+              <p>
+                <strong>Alert:</strong> {selectedAlert.title}
+              </p>
+
+              <p>
+                <strong>Vehicle ID:</strong> {selectedAlert.vehicleId}
+              </p>
+
+              <p>
+                <strong>RSU:</strong> {selectedAlert.rsuId}
+              </p>
+
+              <p>
+                <strong>Severity:</strong> {selectedAlert.severity}
+              </p>
+
+              <p>
+                <strong>Timestamp:</strong> {selectedAlert.timestamp}
+              </p>
+
+              <p>
+                <strong>Description:</strong> {selectedAlert.description}
+              </p>
+
+              <div className="investigation-recommendation">
+                <h3>Recommended Action</h3>
+                <p>
+                  Verify the vehicle certificate, review recent access attempts
+                  and temporarily restrict access if suspicious activity
+                  continues.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

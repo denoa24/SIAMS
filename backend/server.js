@@ -198,17 +198,24 @@ app.post('/api/access-requests/simulate', (req, res) => {
   accessRequests = [newRequest, ...accessRequests];
 
   if (newRequest.status === 'Denied') {
-    const newAlert = {
-      id: securityAlerts.length + 1,
-      title: 'Unauthorized Access Attempt',
-      vehicleId: randomVehicle.id,
-      rsuId: randomVehicle.rsu,
-      severity: 'Critical',
-      timestamp: newRequest.timestamp,
-      description: `Vehicle ${randomVehicle.id} was denied access due to: ${reason}.`,
-    };
+    const existingAlert = securityAlerts.find(
+      (alert) => alert.vehicleId === randomVehicle.id
+    );
 
-    securityAlerts = [newAlert, ...securityAlerts];
+    if (!existingAlert) {
+      const newAlert = {
+        id: securityAlerts.length + 1,
+        title: 'Unauthorized Access Attempt',
+        vehicleId: randomVehicle.id,
+        rsuId: randomVehicle.rsu,
+        severity: 'Critical',
+        timestamp: newRequest.timestamp,
+        description: `Vehicle ${randomVehicle.id} was denied access due to: ${reason}.`,
+      };
+
+      securityAlerts = [newAlert, ...securityAlerts];
+      saveData();
+    }
   }
 
   saveData();
@@ -451,7 +458,9 @@ app.put('/api/access-requests/:id/reject', (req, res) => {
   const request = accessRequests.find((request) => request.id === requestId);
 
   if (!request) {
-    return res.status(404).json({ message: 'Access request not found.' });
+    return res.status(404).json({
+      message: 'Access request not found.',
+    });
   }
 
   request.status = 'Denied';
@@ -466,17 +475,26 @@ app.put('/api/access-requests/:id/reject', (req, res) => {
     vehicle.lastSeen = new Date().toLocaleTimeString('en-GB');
   }
 
-  const newAlert = {
-    id: securityAlerts.length + 1,
-    title: 'Manual Access Rejection',
-    vehicleId: request.vehicleId,
-    rsuId: request.rsuId,
-    severity: 'High',
-    timestamp: new Date().toLocaleTimeString('en-GB'),
-    description: `Vehicle ${request.vehicleId} was manually rejected by the administrator.`,
-  };
+  const existingAlert = securityAlerts.find(
+    (alert) => alert.vehicleId === request.vehicleId
+  );
 
-  securityAlerts = [newAlert, ...securityAlerts];
+  if (existingAlert) {
+    existingAlert.timestamp = new Date().toLocaleTimeString('en-GB');
+    existingAlert.description = `Vehicle ${request.vehicleId} was manually rejected again by the administrator.`;
+  } else {
+    const newAlert = {
+      id: securityAlerts.length + 1,
+      title: 'Manual Access Rejection',
+      vehicleId: request.vehicleId,
+      rsuId: request.rsuId,
+      severity: 'High',
+      timestamp: new Date().toLocaleTimeString('en-GB'),
+      description: `Vehicle ${request.vehicleId} was manually rejected by the administrator.`,
+    };
+
+    securityAlerts = [newAlert, ...securityAlerts];
+  }
 
   saveData();
 
