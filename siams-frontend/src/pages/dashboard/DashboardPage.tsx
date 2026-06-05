@@ -29,10 +29,24 @@ type SecurityAlert = {
   description: string;
 };
 
+type Vehicle = {
+  id: string;
+  status: 'Authenticated' | 'Denied' | 'Pending';
+  speed: number;
+  location: string;
+  rsu: string;
+  lastSeen: string;
+  certificate: 'Valid' | 'Expired';
+};
+
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [securityAlerts, setSecurityAlerts] = useState<SecurityAlert[]>([]);
+
+  const [vehicleSearch, setVehicleSearch] = useState('');
+  const [searchResult, setSearchResult] = useState<Vehicle | null>(null);
+  const [searchMessage, setSearchMessage] = useState('');
 
   const loadDashboardData = async () => {
     const statsResponse = await api.get('/dashboard/stats');
@@ -50,6 +64,25 @@ export function DashboardPage() {
     await loadDashboardData();
   };
 
+  const searchVehicle = async () => {
+    setSearchMessage('');
+    setSearchResult(null);
+
+    if (!vehicleSearch.trim()) {
+      setSearchMessage('Please enter a vehicle ID.');
+      return;
+    }
+
+    const response = await api.get(`/vehicles?search=${vehicleSearch.trim()}`);
+
+    if (response.data.length === 0) {
+      setSearchMessage('No vehicle found.');
+      return;
+    }
+
+    setSearchResult(response.data[0]);
+  };
+
   useEffect(() => {
     api.get('/dashboard/stats').then((statsResponse) => {
       setStats(statsResponse.data);
@@ -64,23 +97,23 @@ export function DashboardPage() {
     });
   }, []);
 
-useEffect(() => {
-  const interval = setInterval(() => {
-    api.get('/dashboard/stats').then((statsResponse) => {
-      setStats(statsResponse.data);
-    });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      api.get('/dashboard/stats').then((statsResponse) => {
+        setStats(statsResponse.data);
+      });
 
-    api.get('/dashboard/activity').then((activityResponse) => {
-      setActivityLogs(activityResponse.data);
-    });
+      api.get('/dashboard/activity').then((activityResponse) => {
+        setActivityLogs(activityResponse.data);
+      });
 
-    api.get('/security-alerts').then((alertsResponse) => {
-      setSecurityAlerts(alertsResponse.data.slice(0, 2));
-    });
-  }, 5000);
+      api.get('/security-alerts').then((alertsResponse) => {
+        setSecurityAlerts(alertsResponse.data.slice(0, 2));
+      });
+    }, 5000);
 
-  return () => clearInterval(interval);
-}, []);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="dashboard-page">
@@ -100,10 +133,53 @@ useEffect(() => {
               type="text"
               placeholder="Search vehicle..."
               className="search-input"
+              value={vehicleSearch}
+              onChange={(event) => setVehicleSearch(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  searchVehicle();
+                }
+              }}
             />
 
-            <button className="search-button">Search</button>
+            <button className="search-button" onClick={searchVehicle}>
+              Search
+            </button>
           </div>
+          {searchMessage && (
+            <p className="dashboard-search-message">
+              {searchMessage}
+            </p>
+          )}
+
+          {searchResult && (
+            <div className="dashboard-search-result">
+              <div>
+                <span>Vehicle ID</span>
+                <strong>{searchResult.id}</strong>
+              </div>
+
+              <div>
+                <span>Status</span>
+                <strong>{searchResult.status}</strong>
+              </div>
+
+              <div>
+                <span>Certificate</span>
+                <strong>{searchResult.certificate}</strong>
+              </div>
+
+              <div>
+                <span>RSU</span>
+                <strong>{searchResult.rsu}</strong>
+              </div>
+
+              <div>
+                <span>Location</span>
+                <strong>{searchResult.location}</strong>
+              </div>
+            </div>
+          )}
         </div>
 
         <section className="stats-grid">

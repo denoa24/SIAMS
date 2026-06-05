@@ -58,6 +58,14 @@
   ],
   "accessRequests": [
     {
+      "id": 26,
+      "vehicleId": "VH-5732",
+      "rsuId": "RSU-04",
+      "timestamp": "15:13:06",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
       "id": 25,
       "vehicleId": "VH-3815",
       "rsuId": "RSU-02",
