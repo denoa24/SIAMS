@@ -6,7 +6,7 @@
       "speed": 57,
       "location": "Bucharest - Sector 1",
       "rsu": "RSU-04",
-      "lastSeen": "15:12:08",
+      "lastSeen": "12:31:30",
       "certificate": "Valid",
       "lat": 44.4595,
       "lng": 26.0893
@@ -35,11 +35,11 @@
     },
     {
       "id": "VH-5732",
-      "status": "Authenticated",
+      "status": "Denied",
       "speed": 69,
       "location": "Bucharest - Sector 6",
       "rsu": "RSU-04",
-      "lastSeen": "15:18:09",
+      "lastSeen": "12:31:55",
       "certificate": "Valid",
       "lat": 44.4388,
       "lng": 26.0412
@@ -57,6 +57,70 @@
     }
   ],
   "accessRequests": [
+    {
+      "id": 21,
+      "vehicleId": "VH-5732",
+      "rsuId": "RSU-04",
+      "timestamp": "12:31:50",
+      "status": "Denied",
+      "reason": "Manually rejected by administrator"
+    },
+    {
+      "id": 20,
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "12:31:49",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 19,
+      "vehicleId": "VH-3815",
+      "rsuId": "RSU-02",
+      "timestamp": "12:31:47",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 18,
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "timestamp": "12:31:46",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 17,
+      "vehicleId": "VH-3815",
+      "rsuId": "RSU-02",
+      "timestamp": "12:31:44",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 16,
+      "vehicleId": "VH-2407",
+      "rsuId": "RSU-04",
+      "timestamp": "12:31:43",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 15,
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "timestamp": "12:31:37",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 14,
+      "vehicleId": "VH-2407",
+      "rsuId": "RSU-04",
+      "timestamp": "12:30:10",
+      "status": "Granted",
+      "reason": "Manually approved by administrator"
+    },
     {
       "id": 13,
       "vehicleId": "VH-4928",
@@ -163,6 +227,33 @@
     }
   ],
   "securityAlerts": [
+    {
+      "id": 7,
+      "title": "Manual Access Rejection",
+      "vehicleId": "VH-5732",
+      "rsuId": "RSU-04",
+      "severity": "High",
+      "timestamp": "12:31:55",
+      "description": "Vehicle VH-5732 was manually rejected by the administrator."
+    },
+    {
+      "id": 6,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "severity": "Critical",
+      "timestamp": "12:31:46",
+      "description": "Vehicle VH-4928 was denied access due to: Expired certificate."
+    },
+    {
+      "id": 5,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VH-4928",
+      "rsuId": "RSU-11",
+      "severity": "Critical",
+      "timestamp": "12:31:37",
+      "description": "Vehicle VH-4928 was denied access due to: Expired certificate."
+    },
     {
       "id": 4,
       "title": "Unauthorized Access Attempt",
