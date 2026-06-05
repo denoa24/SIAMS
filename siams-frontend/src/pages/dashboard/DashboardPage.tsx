@@ -60,16 +60,29 @@ export function DashboardPage() {
 
     const alertsResponse = await api.get('/security-alerts');
     setSecurityAlerts(alertsResponse.data.slice(0, 2));
+
+    const simulationResponse = await api.get('/simulation/status');
+    setIsSimulationRunning(simulationResponse.data.running);
+    setSimulationCount(simulationResponse.data.events);
   };
 
   const simulateAccess = async () => {
     await api.post('/access-requests/simulate');
-    setSimulationCount((current) => current + 1);
     await loadDashboardData();
   };
 
-  const toggleSimulation = () => {
-    setIsSimulationRunning((currentValue) => !currentValue);
+  const toggleSimulation = async () => {
+    if (isSimulationRunning) {
+      const response = await api.post('/simulation/stop');
+      setIsSimulationRunning(response.data.running);
+      setSimulationCount(response.data.events);
+    } else {
+      const response = await api.post('/simulation/start');
+      setIsSimulationRunning(response.data.running);
+      setSimulationCount(response.data.events);
+    }
+
+    await loadDashboardData();
   };
 
   const searchVehicle = async () => {
@@ -103,6 +116,11 @@ export function DashboardPage() {
     api.get('/security-alerts').then((alertsResponse) => {
       setSecurityAlerts(alertsResponse.data.slice(0, 2));
     });
+
+    api.get('/simulation/status').then((simulationResponse) => {
+      setIsSimulationRunning(simulationResponse.data.running);
+      setSimulationCount(simulationResponse.data.events);
+    });
   }, []);
 
   useEffect(() => {
@@ -118,22 +136,15 @@ export function DashboardPage() {
       api.get('/security-alerts').then((alertsResponse) => {
         setSecurityAlerts(alertsResponse.data.slice(0, 2));
       });
+
+      api.get('/simulation/status').then((simulationResponse) => {
+        setIsSimulationRunning(simulationResponse.data.running);
+        setSimulationCount(simulationResponse.data.events);
+      });
     }, 5000);
 
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    if (!isSimulationRunning) {
-      return;
-    }
-
-    const interval = setInterval(() => {
-      simulateAccess();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [isSimulationRunning]);
 
   return (
     <div className="dashboard-page">
@@ -354,9 +365,7 @@ export function DashboardPage() {
                       {alert.title}
                     </p>
 
-                    <p className="alert-description">
-                      {alert.description}
-                    </p>
+                    <p className="alert-description">{alert.description}</p>
                   </div>
                 ))}
               </div>
@@ -374,7 +383,7 @@ export function DashboardPage() {
                 <div className="flow-arrow">↓</div>
                 <div className="architecture-step">Authentication Server</div>
                 <div className="flow-arrow">↓</div>
-                <div className="architecture-step">Cloud Database</div>
+                <div className="architecture-step">JSON Persistence Layer</div>
               </div>
             </div>
           </div>

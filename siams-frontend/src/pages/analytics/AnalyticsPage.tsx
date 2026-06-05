@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { PageHeader } from '../../components/PageHeader';
 import { api } from '../../services/api';
 import './AnalyticsPage.css';
@@ -12,6 +14,44 @@ type AnalyticsData = {
   expiredCertificates: number;
   totalRequests: number;
   totalAlerts: number;
+};
+
+type Vehicle = {
+  id: string;
+  status: string;
+  speed: number;
+  location: string;
+  rsu: string;
+  certificate: string;
+  lastSeen: string;
+};
+
+type AccessRequest = {
+  id: number;
+  vehicleId: string;
+  rsuId: string;
+  status: string;
+  timestamp: string;
+  reason: string;
+};
+
+type SecurityAlert = {
+  id: number;
+  title: string;
+  vehicleId: string;
+  rsuId: string;
+  severity: string;
+  timestamp: string;
+  description: string;
+};
+
+type Rsu = {
+  id: string;
+  location: string;
+  status: string;
+  connectedVehicles: number;
+  health: number;
+  lastSignal: string;
 };
 
 export function AnalyticsPage() {
@@ -40,8 +80,8 @@ export function AnalyticsPage() {
     analytics.totalVehicles === 0
       ? 0
       : Math.round(
-          (analytics.authenticatedVehicles / analytics.totalVehicles) * 100
-        );
+        (analytics.authenticatedVehicles / analytics.totalVehicles) * 100
+      );
 
   const deniedRate =
     analytics.totalVehicles === 0
@@ -62,8 +102,8 @@ export function AnalyticsPage() {
     analytics.totalVehicles === 0
       ? 0
       : Math.round(
-          (analytics.expiredCertificates / analytics.totalVehicles) * 100
-        );
+        (analytics.expiredCertificates / analytics.totalVehicles) * 100
+      );
 
   const metrics = [
     {
@@ -92,12 +132,108 @@ export function AnalyticsPage() {
     },
   ] as const;
 
+  const generateSecurityReport = async () => {
+    const vehiclesResponse = await api.get('/vehicles');
+    const requestsResponse = await api.get('/access-requests');
+    const alertsResponse = await api.get('/security-alerts');
+    const rsusResponse = await api.get('/rsus');
+
+    const vehicles: Vehicle[] = vehiclesResponse.data;
+    const requests: AccessRequest[] = requestsResponse.data;
+    const alerts: SecurityAlert[] = alertsResponse.data;
+    const rsus: Rsu[] = rsusResponse.data;
+
+    const doc = new jsPDF();
+
+    doc.setFontSize(20);
+    doc.text('SIAMS Security Report', 14, 18);
+
+    doc.setFontSize(11);
+    doc.text(`Generated at: ${new Date().toLocaleString()}`, 14, 28);
+
+    doc.setFontSize(14);
+    doc.text('System Summary', 14, 42);
+
+    autoTable(doc, {
+      startY: 48,
+      head: [['Metric', 'Value']],
+      body: [
+        ['Total Vehicles', String(analytics?.totalVehicles ?? 0)],
+        ['Authenticated Vehicles', String(analytics?.authenticatedVehicles ?? 0)],
+        ['Denied Vehicles', String(analytics?.deniedVehicles ?? 0)],
+        ['Pending Vehicles', String(analytics?.pendingVehicles ?? 0)],
+        ['Valid Certificates', String(analytics?.validCertificates ?? 0)],
+        ['Expired Certificates', String(analytics?.expiredCertificates ?? 0)],
+        ['Total Access Requests', String(analytics?.totalRequests ?? 0)],
+        ['Total Security Alerts', String(analytics?.totalAlerts ?? 0)],
+      ],
+    });
+
+    autoTable(doc, {
+      head: [['Vehicle ID', 'Status', 'Certificate', 'RSU', 'Location']],
+      body: vehicles.map((vehicle) => [
+        vehicle.id,
+        vehicle.status,
+        vehicle.certificate,
+        vehicle.rsu,
+        vehicle.location,
+      ]),
+      margin: { top: 14 },
+    });
+
+    autoTable(doc, {
+      head: [['ID', 'Vehicle', 'RSU', 'Status', 'Timestamp', 'Reason']],
+      body: requests.map((request) => [
+        request.id,
+        request.vehicleId,
+        request.rsuId,
+        request.status,
+        request.timestamp,
+        request.reason,
+      ]),
+      margin: { top: 14 },
+    });
+
+    autoTable(doc, {
+      head: [['ID', 'Vehicle', 'RSU', 'Severity', 'Timestamp', 'Description']],
+      body: alerts.map((alert) => [
+        alert.id,
+        alert.vehicleId,
+        alert.rsuId,
+        alert.severity,
+        alert.timestamp,
+        alert.description,
+      ]),
+      margin: { top: 14 },
+    });
+
+    autoTable(doc, {
+      head: [['RSU', 'Location', 'Status', 'Connected Vehicles', 'Health', 'Last Signal']],
+      body: rsus.map((rsu) => [
+        rsu.id,
+        rsu.location,
+        rsu.status,
+        String(rsu.connectedVehicles),
+        `${rsu.health}%`,
+        rsu.lastSignal,
+      ]),
+      margin: { top: 14 },
+    });
+
+    doc.save('siams-security-report.pdf');
+  };
+
   return (
     <div className="analytics-page">
       <PageHeader
         title="Analytics"
         description="Analyze authentication activity, RSU load and system performance."
       />
+      <div className="analytics-actions">
+        <button className="generate-report-button" onClick={generateSecurityReport}>
+          Generate Security Report
+        </button>
+      </div>
 
       <section className="analytics-metrics-grid">
         {metrics.map((metric) => (

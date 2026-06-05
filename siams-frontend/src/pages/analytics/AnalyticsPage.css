@@ -221,3 +221,33 @@
     align-items: flex-start;
   }
 }
+
+.analytics-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+}
+
+.generate-report-button {
+  background: #00c2ff;
+  color: #020617;
+  border: none;
+  border-radius: 14px;
+  padding: 13px 18px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.generate-report-button:hover {
+  background: #38d9ff;
+}
+
+@media (max-width: 700px) {
+  .analytics-actions {
+    justify-content: stretch;
+  }
+
+  .generate-report-button {
+    width: 100%;
+  }
+}

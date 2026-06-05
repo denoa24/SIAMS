@@ -28,6 +28,10 @@ let accessRequests = data.accessRequests;
 let securityAlerts = data.securityAlerts;
 let rsus = data.rsus;
 
+let simulationInterval = null;
+let simulationEvents = 0;
+let simulationRunning = false;
+
 const saveData = () => {
   writeData({
     vehicles,
@@ -35,6 +39,67 @@ const saveData = () => {
     securityAlerts,
     rsus,
   });
+};
+
+const generateAccessRequest = () => {
+  if (vehicles.length === 0) {
+    return null;
+  }
+
+  const randomVehicle = vehicles[Math.floor(Math.random() * vehicles.length)];
+
+  let status = 'Granted';
+  let reason = 'Vehicle authenticated successfully';
+
+  const randomNumber = Math.random();
+
+  if (randomVehicle.certificate === 'Expired') {
+    status = 'Denied';
+    reason = 'Expired certificate';
+  } else if (randomNumber < 0.25) {
+    status = 'Pending';
+    reason = 'Additional validation required';
+  }
+
+  const newRequest = {
+    id: accessRequests.length + 1,
+    vehicleId: randomVehicle.id,
+    rsuId: randomVehicle.rsu,
+    timestamp: new Date().toLocaleTimeString('en-GB'),
+    status,
+    reason,
+  };
+
+  accessRequests = [newRequest, ...accessRequests];
+
+  if (newRequest.status === 'Denied') {
+    const existingAlert = securityAlerts.find(
+      (alert) => alert.vehicleId === randomVehicle.id
+    );
+
+    if (existingAlert) {
+      existingAlert.timestamp = newRequest.timestamp;
+      existingAlert.description = `Vehicle ${randomVehicle.id} was denied access again due to: ${reason}.`;
+    } else {
+      const newAlert = {
+        id: securityAlerts.length + 1,
+        title: 'Unauthorized Access Attempt',
+        vehicleId: randomVehicle.id,
+        rsuId: randomVehicle.rsu,
+        severity: 'Critical',
+        timestamp: newRequest.timestamp,
+        description: `Vehicle ${randomVehicle.id} was denied access due to: ${reason}.`,
+      };
+
+      securityAlerts = [newAlert, ...securityAlerts];
+    }
+  }
+
+  simulationEvents += 1;
+  saveData();
+
+  console.log('Simulation generated:', newRequest);
+  return newRequest;
 };
 
 // helper live map
@@ -171,54 +236,13 @@ app.get('/api/dashboard/activity', (req, res) => {
 });
 
 app.post('/api/access-requests/simulate', (req, res) => {
-  const randomVehicle = vehicles[Math.floor(Math.random() * vehicles.length)];
+  const newRequest = generateAccessRequest();
 
-  let status = 'Granted';
-  let reason = 'Vehicle authenticated successfully';
-
-  const randomNumber = Math.random();
-
-  if (randomVehicle.certificate === 'Expired') {
-    status = 'Denied';
-    reason = 'Expired certificate';
-  } else if (randomNumber < 0.25) {
-    status = 'Pending';
-    reason = 'Additional validation required';
+  if (!newRequest) {
+    return res.status(400).json({
+      message: 'No vehicles available for simulation.',
+    });
   }
-
-  const newRequest = {
-    id: accessRequests.length + 1,
-    vehicleId: randomVehicle.id,
-    rsuId: randomVehicle.rsu,
-    timestamp: new Date().toLocaleTimeString('en-GB'),
-    status,
-    reason,
-  };
-
-  accessRequests = [newRequest, ...accessRequests];
-
-  if (newRequest.status === 'Denied') {
-    const existingAlert = securityAlerts.find(
-      (alert) => alert.vehicleId === randomVehicle.id
-    );
-
-    if (!existingAlert) {
-      const newAlert = {
-        id: securityAlerts.length + 1,
-        title: 'Unauthorized Access Attempt',
-        vehicleId: randomVehicle.id,
-        rsuId: randomVehicle.rsu,
-        severity: 'Critical',
-        timestamp: newRequest.timestamp,
-        description: `Vehicle ${randomVehicle.id} was denied access due to: ${reason}.`,
-      };
-
-      securityAlerts = [newAlert, ...securityAlerts];
-      saveData();
-    }
-  }
-
-  saveData();
 
   res.status(201).json(newRequest);
 });
@@ -499,6 +523,53 @@ app.put('/api/access-requests/:id/reject', (req, res) => {
   saveData();
 
   res.json(request);
+});
+
+app.get('/api/simulation/status', (req, res) => {
+  res.json({
+    running: simulationRunning,
+    events: simulationEvents,
+  });
+});
+
+app.post('/api/simulation/start', (req, res) => {
+  if (simulationRunning) {
+    return res.json({
+      running: true,
+      events: simulationEvents,
+      message: 'Simulation is already running.',
+    });
+  }
+
+  simulationRunning = true;
+
+  // generate first event immediately
+  generateAccessRequest();
+
+  simulationInterval = setInterval(() => {
+    generateAccessRequest();
+  }, 5000);
+
+  res.json({
+    running: true,
+    events: simulationEvents,
+    message: 'Simulation started.',
+  });
+});
+
+app.post('/api/simulation/stop', (req, res) => {
+  if (simulationInterval) {
+    clearInterval(simulationInterval);
+  }
+
+  simulationInterval = null;
+  simulationRunning = false;
+
+  res.json({
+    running: false,
+    events: simulationEvents,
+    message: 'Simulation stopped.',
+  });
 });
 
 app.listen(PORT, () => {
