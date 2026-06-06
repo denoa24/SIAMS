@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Sidebar } from '../../components/Sidebar';
 import { api } from '../../services/api';
 import './DashboardPage.css';
@@ -8,6 +8,17 @@ type DashboardStats = {
   authenticatedVehicles: number;
   deniedRequests: number;
   activeRSUs: number;
+};
+
+type AnalyticsData = {
+  totalVehicles: number;
+  authenticatedVehicles: number;
+  deniedVehicles: number;
+  pendingVehicles: number;
+  validCertificates: number;
+  expiredCertificates: number;
+  totalRequests: number;
+  totalAlerts: number;
 };
 
 type ActivityLog = {
@@ -39,8 +50,20 @@ type Vehicle = {
   certificate: 'Valid' | 'Expired';
 };
 
+type Rsu = {
+  id: string;
+  location: string;
+  status: string;
+  connectedVehicles: number;
+  health: number;
+  lastSignal: string;
+};
+
 export function DashboardPage() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [averageRsuHealth, setAverageRsuHealth] = useState(0);
+
   const [activityLogs, setActivityLogs] = useState<ActivityLog[]>([]);
   const [securityAlerts, setSecurityAlerts] = useState<SecurityAlert[]>([]);
 
@@ -51,7 +74,18 @@ export function DashboardPage() {
   const [searchResult, setSearchResult] = useState<Vehicle | null>(null);
   const [searchMessage, setSearchMessage] = useState('');
 
-  const loadDashboardData = async () => {
+  const updateAverageRsuHealth = useCallback((rsus: Rsu[]) => {
+    const totalRsuHealth = rsus.reduce(
+      (sum, rsu) => sum + rsu.health,
+      0
+    );
+
+    setAverageRsuHealth(
+      rsus.length === 0 ? 0 : Math.round(totalRsuHealth / rsus.length)
+    );
+  }, []);
+
+  const loadDashboardData = useCallback(async () => {
     const statsResponse = await api.get('/dashboard/stats');
     setStats(statsResponse.data);
 
@@ -64,7 +98,13 @@ export function DashboardPage() {
     const simulationResponse = await api.get('/simulation/status');
     setIsSimulationRunning(simulationResponse.data.running);
     setSimulationCount(simulationResponse.data.events);
-  };
+
+    const analyticsResponse = await api.get('/analytics');
+    setAnalytics(analyticsResponse.data);
+
+    const rsusResponse = await api.get('/rsus');
+    updateAverageRsuHealth(rsusResponse.data);
+  }, [updateAverageRsuHealth]);
 
   const simulateAccess = async () => {
     await api.post('/access-requests/simulate');
@@ -105,46 +145,42 @@ export function DashboardPage() {
   };
 
   useEffect(() => {
-    api.get('/dashboard/stats').then((statsResponse) => {
-      setStats(statsResponse.data);
-    });
+  const loadInitialData = async () => {
+    await loadDashboardData();
+  };
 
-    api.get('/dashboard/activity').then((activityResponse) => {
-      setActivityLogs(activityResponse.data);
-    });
-
-    api.get('/security-alerts').then((alertsResponse) => {
-      setSecurityAlerts(alertsResponse.data.slice(0, 2));
-    });
-
-    api.get('/simulation/status').then((simulationResponse) => {
-      setIsSimulationRunning(simulationResponse.data.running);
-      setSimulationCount(simulationResponse.data.events);
-    });
-  }, []);
+  loadInitialData();
+}, [loadDashboardData]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      api.get('/dashboard/stats').then((statsResponse) => {
-        setStats(statsResponse.data);
-      });
-
-      api.get('/dashboard/activity').then((activityResponse) => {
-        setActivityLogs(activityResponse.data);
-      });
-
-      api.get('/security-alerts').then((alertsResponse) => {
-        setSecurityAlerts(alertsResponse.data.slice(0, 2));
-      });
-
-      api.get('/simulation/status').then((simulationResponse) => {
-        setIsSimulationRunning(simulationResponse.data.running);
-        setSimulationCount(simulationResponse.data.events);
-      });
+      loadDashboardData();
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [loadDashboardData]);
+
+  const authenticationRate =
+    analytics && analytics.totalVehicles > 0
+      ? Math.round(
+          (analytics.authenticatedVehicles / analytics.totalVehicles) * 100
+        )
+      : 0;
+
+  const securityScore =
+    analytics
+      ? Math.max(
+          0,
+          100 -
+            analytics.deniedVehicles * 12 -
+            analytics.expiredCertificates * 10 -
+            analytics.totalAlerts * 8
+        )
+      : 100;
+
+  const systemAvailability = Math.round(
+    (authenticationRate + averageRsuHealth + securityScore) / 3
+  );
 
   return (
     <div className="dashboard-page">
@@ -227,6 +263,80 @@ export function DashboardPage() {
             </div>
           </div>
         )}
+
+        <section className="kpi-grid">
+          <div className="kpi-card">
+            <div className="kpi-header">
+              <span>Security Score</span>
+              <strong>{securityScore}%</strong>
+            </div>
+
+            <div className="kpi-ring">
+              <div
+                className="kpi-ring-fill"
+                style={{ width: `${securityScore}%` }}
+              />
+            </div>
+
+            <p>
+              Calculated from denied vehicles, expired certificates and alerts.
+            </p>
+          </div>
+
+          <div className="kpi-card">
+            <div className="kpi-header">
+              <span>Authentication Rate</span>
+              <strong>{authenticationRate}%</strong>
+            </div>
+
+            <div className="kpi-ring">
+              <div
+                className="kpi-ring-fill success"
+                style={{ width: `${authenticationRate}%` }}
+              />
+            </div>
+
+            <p>
+              Percentage of registered vehicles currently authenticated.
+            </p>
+          </div>
+
+          <div className="kpi-card">
+            <div className="kpi-header">
+              <span>Average RSU Health</span>
+              <strong>{averageRsuHealth}%</strong>
+            </div>
+
+            <div className="kpi-ring">
+              <div
+                className="kpi-ring-fill warning"
+                style={{ width: `${averageRsuHealth}%` }}
+              />
+            </div>
+
+            <p>
+              Average health score across all monitored RSU units.
+            </p>
+          </div>
+
+          <div className="kpi-card">
+            <div className="kpi-header">
+              <span>System Availability</span>
+              <strong>{systemAvailability}%</strong>
+            </div>
+
+            <div className="kpi-ring">
+              <div
+                className="kpi-ring-fill"
+                style={{ width: `${systemAvailability}%` }}
+              />
+            </div>
+
+            <p>
+              Combined score based on authentication, RSU health and security.
+            </p>
+          </div>
+        </section>
 
         <section className="stats-grid">
           <div className="stat-card">
@@ -365,7 +475,9 @@ export function DashboardPage() {
                       {alert.title}
                     </p>
 
-                    <p className="alert-description">{alert.description}</p>
+                    <p className="alert-description">
+                      {alert.description}
+                    </p>
                   </div>
                 ))}
               </div>
