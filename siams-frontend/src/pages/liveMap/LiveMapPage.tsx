@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import {
   MapContainer,
-  TileLayer,
   Marker,
-  Popup
+  Popup,
+  TileLayer,
 } from 'react-leaflet';
-
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
@@ -53,18 +52,31 @@ const createMarkerIcon = (status: VehicleStatus) => {
       ></div>
     `,
     iconSize: [18, 18],
-    iconAnchor: [9, 9]
+    iconAnchor: [9, 9],
   });
 };
 
 export function LiveMapPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
 
   useEffect(() => {
     api.get('/vehicles').then((response) => {
       setVehicles(response.data);
     });
   }, []);
+
+  const authenticatedVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === 'Authenticated'
+  ).length;
+
+  const deniedVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === 'Denied'
+  ).length;
+
+  const pendingVehicles = vehicles.filter(
+    (vehicle) => vehicle.status === 'Pending'
+  ).length;
 
   return (
     <div className="live-map-page">
@@ -103,7 +115,7 @@ export function LiveMapPage() {
                   icon={createMarkerIcon(vehicle.status)}
                 >
                   <Popup>
-                    <div>
+                    <div className="map-popup-content">
                       <strong>{vehicle.id}</strong>
                       <br />
                       Status: {vehicle.status}
@@ -117,6 +129,18 @@ export function LiveMapPage() {
                       Location: {vehicle.location}
                       <br />
                       Last Seen: {vehicle.lastSeen}
+                      <br />
+
+                      <button
+                        type="button"
+                        className="map-popup-button"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          setSelectedVehicle(vehicle);
+                        }}
+                      >
+                        View Details
+                      </button>
                     </div>
                   </Popup>
                 </Marker>
@@ -137,23 +161,17 @@ export function LiveMapPage() {
 
               <div className="map-stat">
                 <span>Authenticated</span>
-                <strong>
-                  {vehicles.filter((vehicle) => vehicle.status === 'Authenticated').length}
-                </strong>
+                <strong>{authenticatedVehicles}</strong>
               </div>
 
               <div className="map-stat">
                 <span>Denied</span>
-                <strong>
-                  {vehicles.filter((vehicle) => vehicle.status === 'Denied').length}
-                </strong>
+                <strong>{deniedVehicles}</strong>
               </div>
 
               <div className="map-stat">
                 <span>Pending</span>
-                <strong>
-                  {vehicles.filter((vehicle) => vehicle.status === 'Pending').length}
-                </strong>
+                <strong>{pendingVehicles}</strong>
               </div>
             </div>
           </div>
@@ -184,23 +202,94 @@ export function LiveMapPage() {
 
             <div className="map-vehicle-list">
               {vehicles.map((vehicle) => (
-                <div key={vehicle.id} className="map-vehicle-item">
+                <button
+                  type="button"
+                  key={vehicle.id}
+                  className="map-vehicle-item"
+                  onClick={() => setSelectedVehicle(vehicle)}
+                >
                   <div className="map-vehicle-item-top">
                     <strong>{vehicle.id}</strong>
 
-                    <span className={`vehicle-status-pill ${vehicle.status.toLowerCase()}`}>
+                    <span
+                      className={`vehicle-status-pill ${vehicle.status.toLowerCase()}`}
+                    >
                       {vehicle.status}
                     </span>
                   </div>
 
                   <p>{vehicle.location}</p>
-                  <p>{vehicle.rsu} · {vehicle.speed} km/h</p>
-                </div>
+                  <p>
+                    {vehicle.rsu} · {vehicle.speed} km/h
+                  </p>
+                </button>
               ))}
             </div>
           </div>
         </aside>
       </div>
+
+      {selectedVehicle && (
+        <div className="vehicle-modal-overlay">
+          <div className="vehicle-modal">
+            <div className="vehicle-modal-header">
+              <div>
+                <h2>{selectedVehicle.id}</h2>
+                <p>Connected Vehicle Profile</p>
+              </div>
+
+              <button
+                type="button"
+                className="vehicle-modal-close"
+                onClick={() => setSelectedVehicle(null)}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="vehicle-modal-grid">
+              <div>
+                <span>Status</span>
+                <strong>{selectedVehicle.status}</strong>
+              </div>
+
+              <div>
+                <span>Certificate</span>
+                <strong>{selectedVehicle.certificate}</strong>
+              </div>
+
+              <div>
+                <span>RSU</span>
+                <strong>{selectedVehicle.rsu}</strong>
+              </div>
+
+              <div>
+                <span>Speed</span>
+                <strong>{selectedVehicle.speed} km/h</strong>
+              </div>
+
+              <div>
+                <span>Location</span>
+                <strong>{selectedVehicle.location}</strong>
+              </div>
+
+              <div>
+                <span>Last Seen</span>
+                <strong>{selectedVehicle.lastSeen}</strong>
+              </div>
+            </div>
+
+            <div className="vehicle-modal-note">
+              <h3>Security Interpretation</h3>
+              <p>
+                This vehicle is monitored by SIAMS through V2I communication.
+                Its certificate status and access behavior are used to determine
+                whether the vehicle can be trusted by the infrastructure.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

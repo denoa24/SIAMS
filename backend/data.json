@@ -58,6 +58,38 @@
   ],
   "accessRequests": [
     {
+      "id": 63,
+      "vehicleId": "VH-5732",
+      "rsuId": "RSU-04",
+      "timestamp": "13:20:38",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 62,
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "12:58:16",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 61,
+      "vehicleId": "VH-6844",
+      "rsuId": "RSU-09",
+      "timestamp": "12:58:11",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 60,
+      "vehicleId": "VH-2407",
+      "rsuId": "RSU-04",
+      "timestamp": "12:58:06",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
       "id": 59,
       "vehicleId": "VH-3815",
       "rsuId": "RSU-02",
