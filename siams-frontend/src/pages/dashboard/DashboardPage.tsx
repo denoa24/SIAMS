@@ -167,16 +167,20 @@ export function DashboardPage() {
         )
       : 0;
 
-  const securityScore =
-    analytics
-      ? Math.max(
-          0,
+  const securityScore = analytics
+  ? Math.max(
+      0,
+      Math.min(
+        100,
+        Math.round(
           100 -
-            analytics.deniedVehicles * 12 -
-            analytics.expiredCertificates * 10 -
-            analytics.totalAlerts * 8
+            analytics.deniedVehicles * 2 -
+            analytics.expiredCertificates * 1.5 -
+            analytics.totalAlerts * 2
         )
-      : 100;
+      )
+    )
+  : 100;
 
   const systemAvailability = Math.round(
     (authenticationRate + averageRsuHealth + securityScore) / 3

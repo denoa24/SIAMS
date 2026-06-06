@@ -1,612 +1,954 @@
 {
   "vehicles": [
     {
-      "id": "VH-2407",
+      "id": "VEH-001",
+      "owner": "Autonomous Taxi Alpha",
+      "certificate": "Valid",
       "status": "Authenticated",
-      "speed": 57,
+      "rsu": "RSU-01",
       "location": "Bucharest - Sector 1",
-      "rsu": "RSU-04",
-      "lastSeen": "17:55:07",
-      "certificate": "Valid",
-      "lat": 44.4595,
-      "lng": 26.0893
+      "speed": 26,
+      "lastSeen": "08:07:11",
+      "lat": 44.459414,
+      "lng": 26.090061
     },
     {
-      "id": "VH-3815",
+      "id": "VEH-002",
+      "owner": "Connected Bus Beta",
+      "certificate": "Valid",
       "status": "Authenticated",
-      "speed": 24,
-      "location": "Bucharest - Sector 2",
       "rsu": "RSU-02",
-      "lastSeen": "17:54:47",
-      "certificate": "Valid",
-      "lat": 44.4527,
-      "lng": 26.1381
+      "location": "Bucharest - Sector 2",
+      "speed": 40,
+      "lastSeen": "08:14:22",
+      "lat": 44.451874,
+      "lng": 26.148263
     },
     {
-      "id": "VH-4928",
-      "status": "Denied",
-      "speed": 0,
+      "id": "VEH-003",
+      "owner": "Logistics Truck Gamma",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-03",
       "location": "Bucharest - Sector 3",
-      "rsu": "RSU-11",
-      "lastSeen": "15:16:41",
+      "speed": 46,
+      "lastSeen": "08:21:33",
+      "lat": 44.418294,
+      "lng": 26.175565
+    },
+    {
+      "id": "VEH-004",
+      "owner": "Emergency Vehicle Delta",
       "certificate": "Expired",
-      "lat": 44.4231,
-      "lng": 26.1685
-    },
-    {
-      "id": "VH-5732",
       "status": "Denied",
-      "speed": 69,
-      "location": "Bucharest - Sector 6",
       "rsu": "RSU-04",
-      "lastSeen": "16:12:25",
-      "certificate": "Valid",
-      "lat": 44.4388,
-      "lng": 26.0412
+      "location": "Bucharest - Sector 4",
+      "speed": 89,
+      "lastSeen": "08:28:44",
+      "lat": 44.411716,
+      "lng": 26.114965
     },
     {
-      "id": "VH-6844",
+      "id": "VEH-005",
+      "owner": "Smart Delivery Van Epsilon",
+      "certificate": "Expired",
       "status": "Denied",
-      "speed": 31,
+      "rsu": "RSU-05",
       "location": "Bucharest - Sector 5",
-      "rsu": "RSU-09",
-      "lastSeen": "13:45:45",
+      "speed": 38,
+      "lastSeen": "08:35:55",
+      "lat": 44.402305,
+      "lng": 26.091603
+    },
+    {
+      "id": "VEH-006",
+      "owner": "Connected Shuttle Zeta",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-06",
+      "location": "Bucharest - Sector 6",
+      "speed": 93,
+      "lastSeen": "09:42:06",
+      "lat": 44.437572,
+      "lng": 26.043815
+    },
+    {
+      "id": "VEH-007",
+      "owner": "Autonomous Car Eta",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-07",
+      "location": "Bucharest - North Ring",
+      "speed": 9,
+      "lastSeen": "09:49:17",
+      "lat": 44.478834,
+      "lng": 26.088035
+    },
+    {
+      "id": "VEH-008",
+      "owner": "Smart Van Theta",
       "certificate": "Valid",
-      "lat": 44.4017,
-      "lng": 26.0826
+      "status": "Authenticated",
+      "rsu": "RSU-08",
+      "location": "Bucharest - South Ring",
+      "speed": 43,
+      "lastSeen": "09:56:28",
+      "lat": 44.356648,
+      "lng": 26.104735
+    },
+    {
+      "id": "VEH-009",
+      "owner": "Connected Taxi Iota",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-01",
+      "location": "Bucharest - Sector 1",
+      "speed": 5,
+      "lastSeen": "09:03:39",
+      "lat": 44.470588,
+      "lng": 26.079163
+    },
+    {
+      "id": "VEH-010",
+      "owner": "Logistics Vehicle Kappa",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-02",
+      "location": "Bucharest - Sector 2",
+      "speed": 71,
+      "lastSeen": "09:10:50",
+      "lat": 44.454453,
+      "lng": 26.147111
+    },
+    {
+      "id": "VEH-011",
+      "owner": "Urban Service Vehicle Lambda",
+      "certificate": "Valid",
+      "status": "Pending",
+      "rsu": "RSU-03",
+      "location": "Bucharest - Sector 3",
+      "speed": 40,
+      "lastSeen": "09:17:01",
+      "lat": 44.419263,
+      "lng": 26.164904
+    },
+    {
+      "id": "VEH-012",
+      "owner": "Municipal Vehicle Mu",
+      "certificate": "Valid",
+      "status": "Pending",
+      "rsu": "RSU-04",
+      "location": "Bucharest - Sector 4",
+      "speed": 63,
+      "lastSeen": "10:24:12",
+      "lat": 44.406917,
+      "lng": 26.123949
+    },
+    {
+      "id": "VEH-013",
+      "owner": "Ride Sharing Vehicle Nu",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-05",
+      "location": "Bucharest - Sector 5",
+      "speed": 11,
+      "lastSeen": "10:31:23",
+      "lat": 44.412372,
+      "lng": 26.081978
+    },
+    {
+      "id": "VEH-014",
+      "owner": "Smart Ambulance Xi",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-06",
+      "location": "Bucharest - Sector 6",
+      "speed": 85,
+      "lastSeen": "10:38:34",
+      "lat": 44.42836,
+      "lng": 26.046748
+    },
+    {
+      "id": "VEH-015",
+      "owner": "Electric Fleet Vehicle Omicron",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-07",
+      "location": "Bucharest - North Ring",
+      "speed": 39,
+      "lastSeen": "10:45:45",
+      "lat": 44.491531,
+      "lng": 26.101834
+    },
+    {
+      "id": "VEH-016",
+      "owner": "Autonomous Taxi Pi",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-08",
+      "location": "Bucharest - South Ring",
+      "speed": 57,
+      "lastSeen": "10:52:56",
+      "lat": 44.35983,
+      "lng": 26.102259
+    },
+    {
+      "id": "VEH-017",
+      "owner": "Connected Bus Rho",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-01",
+      "location": "Bucharest - Sector 1",
+      "speed": 85,
+      "lastSeen": "10:59:07",
+      "lat": 44.455828,
+      "lng": 26.099876
+    },
+    {
+      "id": "VEH-018",
+      "owner": "Logistics Truck Sigma",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-02",
+      "location": "Bucharest - Sector 2",
+      "speed": 45,
+      "lastSeen": "11:06:18",
+      "lat": 44.444733,
+      "lng": 26.12891
+    },
+    {
+      "id": "VEH-019",
+      "owner": "Emergency Vehicle Tau",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-03",
+      "location": "Bucharest - Sector 3",
+      "speed": 7,
+      "lastSeen": "11:13:29",
+      "lat": 44.416337,
+      "lng": 26.163398
+    },
+    {
+      "id": "VEH-020",
+      "owner": "Smart Delivery Van Upsilon",
+      "certificate": "Valid",
+      "status": "Pending",
+      "rsu": "RSU-04",
+      "location": "Bucharest - Sector 4",
+      "speed": 94,
+      "lastSeen": "11:20:40",
+      "lat": 44.398943,
+      "lng": 26.122383
+    },
+    {
+      "id": "VEH-021",
+      "owner": "Connected Shuttle Phi",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-05",
+      "location": "Bucharest - Sector 5",
+      "speed": 63,
+      "lastSeen": "11:27:51",
+      "lat": 44.391634,
+      "lng": 26.08138
+    },
+    {
+      "id": "VEH-022",
+      "owner": "Autonomous Car Chi",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-06",
+      "location": "Bucharest - Sector 6",
+      "speed": 70,
+      "lastSeen": "11:34:02",
+      "lat": 44.433468,
+      "lng": 26.032486
+    },
+    {
+      "id": "VEH-023",
+      "owner": "Smart Van Psi",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-07",
+      "location": "Bucharest - North Ring",
+      "speed": 55,
+      "lastSeen": "11:41:13",
+      "lat": 44.496736,
+      "lng": 26.084682
+    },
+    {
+      "id": "VEH-024",
+      "owner": "Connected Taxi Omega",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-08",
+      "location": "Bucharest - South Ring",
+      "speed": 53,
+      "lastSeen": "12:48:24",
+      "lat": 44.376675,
+      "lng": 26.109385
+    },
+    {
+      "id": "VEH-025",
+      "owner": "Logistics Vehicle Alpha",
+      "certificate": "Valid",
+      "status": "Pending",
+      "rsu": "RSU-01",
+      "location": "Bucharest - Sector 1",
+      "speed": 48,
+      "lastSeen": "12:55:35",
+      "lat": 44.470486,
+      "lng": 26.080922
+    },
+    {
+      "id": "VEH-026",
+      "owner": "Urban Service Vehicle Beta",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-02",
+      "location": "Bucharest - Sector 2",
+      "speed": 22,
+      "lastSeen": "12:02:46",
+      "lat": 44.444331,
+      "lng": 26.141904
+    },
+    {
+      "id": "VEH-027",
+      "owner": "Municipal Vehicle Gamma",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-03",
+      "location": "Bucharest - Sector 3",
+      "speed": 1,
+      "lastSeen": "12:09:57",
+      "lat": 44.422739,
+      "lng": 26.170639
+    },
+    {
+      "id": "VEH-028",
+      "owner": "Ride Sharing Vehicle Delta",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-04",
+      "location": "Bucharest - Sector 4",
+      "speed": 33,
+      "lastSeen": "12:16:08",
+      "lat": 44.399766,
+      "lng": 26.116496
+    },
+    {
+      "id": "VEH-029",
+      "owner": "Smart Ambulance Epsilon",
+      "certificate": "Valid",
+      "status": "Pending",
+      "rsu": "RSU-05",
+      "location": "Bucharest - Sector 5",
+      "speed": 68,
+      "lastSeen": "12:23:19",
+      "lat": 44.398562,
+      "lng": 26.084192
+    },
+    {
+      "id": "VEH-030",
+      "owner": "Electric Fleet Vehicle Zeta",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-06",
+      "location": "Bucharest - Sector 6",
+      "speed": 16,
+      "lastSeen": "13:30:30",
+      "lat": 44.443372,
+      "lng": 26.041572
+    },
+    {
+      "id": "VEH-031",
+      "owner": "Autonomous Taxi Eta",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-07",
+      "location": "Bucharest - North Ring",
+      "speed": 79,
+      "lastSeen": "13:37:41",
+      "lat": 44.491719,
+      "lng": 26.095755
+    },
+    {
+      "id": "VEH-032",
+      "owner": "Connected Bus Theta",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-08",
+      "location": "Bucharest - South Ring",
+      "speed": 58,
+      "lastSeen": "13:44:52",
+      "lat": 44.374589,
+      "lng": 26.111719
+    },
+    {
+      "id": "VEH-033",
+      "owner": "Logistics Truck Iota",
+      "certificate": "Valid",
+      "status": "Pending",
+      "rsu": "RSU-01",
+      "location": "Bucharest - Sector 1",
+      "speed": 87,
+      "lastSeen": "13:51:03",
+      "lat": 44.466649,
+      "lng": 26.086717
+    },
+    {
+      "id": "VEH-034",
+      "owner": "Emergency Vehicle Kappa",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-02",
+      "location": "Bucharest - Sector 2",
+      "speed": 51,
+      "lastSeen": "13:58:14",
+      "lat": 44.450159,
+      "lng": 26.137657
+    },
+    {
+      "id": "VEH-035",
+      "owner": "Smart Delivery Van Lambda",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-03",
+      "location": "Bucharest - Sector 3",
+      "speed": 51,
+      "lastSeen": "13:05:25",
+      "lat": 44.412594,
+      "lng": 26.158116
+    },
+    {
+      "id": "VEH-036",
+      "owner": "Connected Shuttle Mu",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-04",
+      "location": "Bucharest - Sector 4",
+      "speed": 26,
+      "lastSeen": "14:12:36",
+      "lat": 44.403575,
+      "lng": 26.115638
+    },
+    {
+      "id": "VEH-037",
+      "owner": "Autonomous Car Nu",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-05",
+      "location": "Bucharest - Sector 5",
+      "speed": 76,
+      "lastSeen": "14:19:47",
+      "lat": 44.390962,
+      "lng": 26.070606
+    },
+    {
+      "id": "VEH-038",
+      "owner": "Smart Van Xi",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-06",
+      "location": "Bucharest - Sector 6",
+      "speed": 19,
+      "lastSeen": "14:26:58",
+      "lat": 44.439679,
+      "lng": 26.051975
+    },
+    {
+      "id": "VEH-039",
+      "owner": "Connected Taxi Omicron",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-07",
+      "location": "Bucharest - North Ring",
+      "speed": 78,
+      "lastSeen": "14:33:09",
+      "lat": 44.476612,
+      "lng": 26.098984
+    },
+    {
+      "id": "VEH-040",
+      "owner": "Logistics Vehicle Pi",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-08",
+      "location": "Bucharest - South Ring",
+      "speed": 78,
+      "lastSeen": "14:40:20",
+      "lat": 44.36203,
+      "lng": 26.108226
+    },
+    {
+      "id": "VEH-041",
+      "owner": "Urban Service Vehicle Rho",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-01",
+      "location": "Bucharest - Sector 1",
+      "speed": 44,
+      "lastSeen": "14:47:31",
+      "lat": 44.461955,
+      "lng": 26.08868
+    },
+    {
+      "id": "VEH-042",
+      "owner": "Municipal Vehicle Sigma",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-02",
+      "location": "Bucharest - Sector 2",
+      "speed": 14,
+      "lastSeen": "15:54:42",
+      "lat": 44.461074,
+      "lng": 26.149934
+    },
+    {
+      "id": "VEH-043",
+      "owner": "Ride Sharing Vehicle Tau",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-03",
+      "location": "Bucharest - Sector 3",
+      "speed": 59,
+      "lastSeen": "15:01:53",
+      "lat": 44.422629,
+      "lng": 26.163984
+    },
+    {
+      "id": "VEH-044",
+      "owner": "Smart Ambulance Upsilon",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-04",
+      "location": "Bucharest - Sector 4",
+      "speed": 18,
+      "lastSeen": "15:08:04",
+      "lat": 44.395453,
+      "lng": 26.121223
+    },
+    {
+      "id": "VEH-045",
+      "owner": "Electric Fleet Vehicle Phi",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-05",
+      "location": "Bucharest - Sector 5",
+      "speed": 33,
+      "lastSeen": "15:15:15",
+      "lat": 44.401187,
+      "lng": 26.087209
+    },
+    {
+      "id": "VEH-046",
+      "owner": "Autonomous Taxi Chi",
+      "certificate": "Expired",
+      "status": "Denied",
+      "rsu": "RSU-06",
+      "location": "Bucharest - Sector 6",
+      "speed": 66,
+      "lastSeen": "15:22:26",
+      "lat": 44.427354,
+      "lng": 26.052024
+    },
+    {
+      "id": "VEH-047",
+      "owner": "Connected Bus Psi",
+      "certificate": "Valid",
+      "status": "Pending",
+      "rsu": "RSU-07",
+      "location": "Bucharest - North Ring",
+      "speed": 67,
+      "lastSeen": "15:29:37",
+      "lat": 44.484682,
+      "lng": 26.094562
+    },
+    {
+      "id": "VEH-048",
+      "owner": "Logistics Truck Omega",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-08",
+      "location": "Bucharest - South Ring",
+      "speed": 3,
+      "lastSeen": "16:36:48",
+      "lat": 44.371195,
+      "lng": 26.100154
+    },
+    {
+      "id": "VEH-049",
+      "owner": "Emergency Vehicle Alpha",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-01",
+      "location": "Bucharest - Sector 1",
+      "speed": 82,
+      "lastSeen": "16:43:59",
+      "lat": 44.46822,
+      "lng": 26.094009
+    },
+    {
+      "id": "VEH-050",
+      "owner": "Smart Delivery Van Beta",
+      "certificate": "Valid",
+      "status": "Authenticated",
+      "rsu": "RSU-02",
+      "location": "Bucharest - Sector 2",
+      "speed": 33,
+      "lastSeen": "16:50:10",
+      "lat": 44.453142,
+      "lng": 26.147898
     }
   ],
   "accessRequests": [
     {
-      "id": 63,
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
-      "timestamp": "13:20:38",
+      "id": 1,
+      "vehicleId": "VEH-008",
+      "rsuId": "RSU-08",
       "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 62,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "12:58:16",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 61,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "12:58:11",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 60,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "12:58:06",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 59,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "19:19:35",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 58,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "19:19:30",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 57,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "19:19:25",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 56,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "19:19:20",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 55,
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "timestamp": "19:19:15",
-      "status": "Denied",
-      "reason": "Expired certificate"
-    },
-    {
-      "id": 54,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "19:19:10",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 53,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "19:19:05",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 52,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "19:18:14",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 51,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "19:16:04",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 50,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "19:16:03",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 49,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "19:16:02",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 48,
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
-      "timestamp": "19:16:02",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 47,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "19:16:02",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 46,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "19:16:01",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 45,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "19:16:00",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 44,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "19:15:59",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 43,
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
-      "timestamp": "19:15:59",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 42,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "19:15:59",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 41,
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
-      "timestamp": "19:15:58",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 40,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "19:15:30",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 39,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "19:14:38",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 38,
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "timestamp": "18:56:09",
-      "status": "Denied",
-      "reason": "Expired certificate"
-    },
-    {
-      "id": 37,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "18:56:07",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 36,
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "timestamp": "18:56:01",
-      "status": "Denied",
-      "reason": "Expired certificate"
-    },
-    {
-      "id": 35,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "18:55:49",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 34,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "18:55:42",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 33,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "18:55:39",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 32,
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "timestamp": "18:54:11",
-      "status": "Denied",
-      "reason": "Expired certificate"
-    },
-    {
-      "id": 31,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "18:54:04",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 30,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "18:48:35",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 29,
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
-      "timestamp": "18:47:51",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 28,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "18:45:36",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 27,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "18:44:23",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 26,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "18:44:11",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 25,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "18:43:44",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 24,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "18:43:39",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 23,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "18:43:39",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 22,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "18:43:31",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 21,
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
-      "timestamp": "18:36:09",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 20,
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "timestamp": "18:25:29",
-      "status": "Denied",
-      "reason": "Expired certificate"
-    },
-    {
-      "id": 19,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "18:24:32",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 18,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "18:24:27",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 17,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "18:24:22",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 16,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "18:24:17",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 15,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "18:24:12",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 14,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "18:24:12",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 13,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "17:55:32",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 12,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "17:55:31",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 11,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "17:55:31",
-      "status": "Pending",
-      "reason": "Additional validation required"
-    },
-    {
-      "id": 10,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "16:12:36",
-      "status": "Denied",
-      "reason": "Manually rejected by administrator"
-    },
-    {
-      "id": 9,
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "timestamp": "16:12:36",
-      "status": "Denied",
-      "reason": "Expired certificate"
-    },
-    {
-      "id": 8,
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
-      "timestamp": "16:12:35",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 7,
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
-      "timestamp": "16:12:16",
-      "status": "Denied",
-      "reason": "Manually rejected by administrator"
-    },
-    {
-      "id": 6,
-      "vehicleId": "VH-6844",
-      "rsuId": "RSU-09",
-      "timestamp": "16:12:16",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 5,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "16:12:15",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 4,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "16:12:15",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
-    },
-    {
-      "id": 3,
-      "vehicleId": "VH-5732",
-      "rsuId": "RSU-04",
-      "timestamp": "16:12:14",
-      "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
+      "timestamp": "08:10:00",
+      "reason": "Authentication successful"
     },
     {
       "id": 2,
-      "vehicleId": "VH-2407",
-      "rsuId": "RSU-04",
-      "timestamp": "16:12:14",
+      "vehicleId": "VEH-015",
+      "rsuId": "RSU-07",
       "status": "Granted",
-      "reason": "Vehicle authenticated successfully"
+      "timestamp": "08:15:00",
+      "reason": "Authentication successful"
     },
     {
-      "id": 1,
-      "vehicleId": "VH-3815",
-      "rsuId": "RSU-02",
-      "timestamp": "16:12:13",
+      "id": 3,
+      "vehicleId": "VEH-022",
+      "rsuId": "RSU-06",
       "status": "Granted",
-      "reason": "Manually approved by administrator"
+      "timestamp": "08:20:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 4,
+      "vehicleId": "VEH-029",
+      "rsuId": "RSU-05",
+      "status": "Pending",
+      "timestamp": "08:25:00",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 5,
+      "vehicleId": "VEH-036",
+      "rsuId": "RSU-04",
+      "status": "Denied",
+      "timestamp": "08:30:00",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 6,
+      "vehicleId": "VEH-043",
+      "rsuId": "RSU-03",
+      "status": "Granted",
+      "timestamp": "08:35:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 7,
+      "vehicleId": "VEH-050",
+      "rsuId": "RSU-02",
+      "status": "Denied",
+      "timestamp": "08:40:00",
+      "reason": "Manual security verification failed"
+    },
+    {
+      "id": 8,
+      "vehicleId": "VEH-007",
+      "rsuId": "RSU-07",
+      "status": "Denied",
+      "timestamp": "08:45:00",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 9,
+      "vehicleId": "VEH-014",
+      "rsuId": "RSU-06",
+      "status": "Granted",
+      "timestamp": "08:50:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 10,
+      "vehicleId": "VEH-021",
+      "rsuId": "RSU-05",
+      "status": "Denied",
+      "timestamp": "08:55:00",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 11,
+      "vehicleId": "VEH-028",
+      "rsuId": "RSU-04",
+      "status": "Granted",
+      "timestamp": "09:00:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 12,
+      "vehicleId": "VEH-035",
+      "rsuId": "RSU-03",
+      "status": "Granted",
+      "timestamp": "09:05:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 13,
+      "vehicleId": "VEH-042",
+      "rsuId": "RSU-02",
+      "status": "Granted",
+      "timestamp": "09:10:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 14,
+      "vehicleId": "VEH-049",
+      "rsuId": "RSU-01",
+      "status": "Pending",
+      "timestamp": "09:15:00",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 15,
+      "vehicleId": "VEH-006",
+      "rsuId": "RSU-06",
+      "status": "Denied",
+      "timestamp": "09:20:00",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 16,
+      "vehicleId": "VEH-013",
+      "rsuId": "RSU-05",
+      "status": "Granted",
+      "timestamp": "09:25:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 17,
+      "vehicleId": "VEH-020",
+      "rsuId": "RSU-04",
+      "status": "Denied",
+      "timestamp": "09:30:00",
+      "reason": "Manual security verification failed"
+    },
+    {
+      "id": 18,
+      "vehicleId": "VEH-027",
+      "rsuId": "RSU-03",
+      "status": "Granted",
+      "timestamp": "09:35:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 19,
+      "vehicleId": "VEH-034",
+      "rsuId": "RSU-02",
+      "status": "Granted",
+      "timestamp": "09:40:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 20,
+      "vehicleId": "VEH-041",
+      "rsuId": "RSU-01",
+      "status": "Pending",
+      "timestamp": "09:45:00",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 21,
+      "vehicleId": "VEH-048",
+      "rsuId": "RSU-08",
+      "status": "Granted",
+      "timestamp": "09:50:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 22,
+      "vehicleId": "VEH-005",
+      "rsuId": "RSU-05",
+      "status": "Denied",
+      "timestamp": "09:55:00",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 23,
+      "vehicleId": "VEH-012",
+      "rsuId": "RSU-04",
+      "status": "Granted",
+      "timestamp": "10:00:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 24,
+      "vehicleId": "VEH-019",
+      "rsuId": "RSU-03",
+      "status": "Pending",
+      "timestamp": "10:05:00",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 25,
+      "vehicleId": "VEH-026",
+      "rsuId": "RSU-02",
+      "status": "Granted",
+      "timestamp": "10:10:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 26,
+      "vehicleId": "VEH-033",
+      "rsuId": "RSU-01",
+      "status": "Granted",
+      "timestamp": "10:15:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 27,
+      "vehicleId": "VEH-040",
+      "rsuId": "RSU-08",
+      "status": "Denied",
+      "timestamp": "10:20:00",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 28,
+      "vehicleId": "VEH-047",
+      "rsuId": "RSU-07",
+      "status": "Granted",
+      "timestamp": "10:25:00",
+      "reason": "Authentication successful"
+    },
+    {
+      "id": 29,
+      "vehicleId": "VEH-004",
+      "rsuId": "RSU-04",
+      "status": "Denied",
+      "timestamp": "10:30:00",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 30,
+      "vehicleId": "VEH-011",
+      "rsuId": "RSU-03",
+      "status": "Pending",
+      "timestamp": "10:35:00",
+      "reason": "Additional validation required"
     }
   ],
   "securityAlerts": [
     {
-      "id": 3,
-      "title": "Manual Access Rejection",
-      "vehicleId": "VH-2407",
+      "id": 1,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VEH-036",
       "rsuId": "RSU-04",
-      "severity": "High",
-      "timestamp": "16:12:46",
-      "description": "Vehicle VH-2407 was manually rejected by the administrator."
+      "severity": "Critical",
+      "timestamp": "08:30:00",
+      "description": "Vehicle VEH-036 was denied access due to: Expired certificate."
     },
     {
       "id": 2,
-      "title": "Unauthorized Access Attempt",
-      "vehicleId": "VH-4928",
-      "rsuId": "RSU-11",
-      "severity": "Critical",
-      "timestamp": "19:19:15",
-      "description": "Vehicle VH-4928 was denied access again due to: Expired certificate."
+      "title": "Manual Access Rejection",
+      "vehicleId": "VEH-050",
+      "rsuId": "RSU-02",
+      "severity": "High",
+      "timestamp": "08:40:00",
+      "description": "Vehicle VEH-050 was denied access due to: Manual security verification failed."
     },
     {
-      "id": 1,
+      "id": 3,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VEH-007",
+      "rsuId": "RSU-07",
+      "severity": "Critical",
+      "timestamp": "08:45:00",
+      "description": "Vehicle VEH-007 was denied access due to: Expired certificate."
+    },
+    {
+      "id": 4,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VEH-021",
+      "rsuId": "RSU-05",
+      "severity": "Critical",
+      "timestamp": "08:55:00",
+      "description": "Vehicle VEH-021 was denied access due to: Expired certificate."
+    },
+    {
+      "id": 5,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VEH-006",
+      "rsuId": "RSU-06",
+      "severity": "Critical",
+      "timestamp": "09:20:00",
+      "description": "Vehicle VEH-006 was denied access due to: Expired certificate."
+    },
+    {
+      "id": 6,
       "title": "Manual Access Rejection",
-      "vehicleId": "VH-5732",
+      "vehicleId": "VEH-020",
       "rsuId": "RSU-04",
       "severity": "High",
-      "timestamp": "16:12:25",
-      "description": "Vehicle VH-5732 was manually rejected by the administrator."
+      "timestamp": "09:30:00",
+      "description": "Vehicle VEH-020 was denied access due to: Manual security verification failed."
+    },
+    {
+      "id": 7,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VEH-005",
+      "rsuId": "RSU-05",
+      "severity": "Critical",
+      "timestamp": "09:55:00",
+      "description": "Vehicle VEH-005 was denied access due to: Expired certificate."
+    },
+    {
+      "id": 8,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VEH-040",
+      "rsuId": "RSU-08",
+      "severity": "Critical",
+      "timestamp": "10:20:00",
+      "description": "Vehicle VEH-040 was denied access due to: Expired certificate."
     }
   ],
   "rsus": [
+    {
+      "id": "RSU-01",
+      "location": "Bucharest - Sector 1"
+    },
     {
       "id": "RSU-02",
       "location": "Bucharest - Sector 2"
     },
     {
-      "id": "RSU-04",
-      "location": "Bucharest - Sector 1"
+      "id": "RSU-03",
+      "location": "Bucharest - Sector 3"
     },
     {
-      "id": "RSU-09",
+      "id": "RSU-04",
+      "location": "Bucharest - Sector 4"
+    },
+    {
+      "id": "RSU-05",
       "location": "Bucharest - Sector 5"
     },
     {
-      "id": "RSU-11",
-      "location": "Bucharest - Sector 3"
+      "id": "RSU-06",
+      "location": "Bucharest - Sector 6"
+    },
+    {
+      "id": "RSU-07",
+      "location": "Bucharest - North Ring"
+    },
+    {
+      "id": "RSU-08",
+      "location": "Bucharest - South Ring"
     }
   ]
 }
