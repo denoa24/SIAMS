@@ -430,7 +430,7 @@ app.get('/api/rsus', (req, res) => {
     const status =
       health >= 85
         ? 'Online'
-        : health >= 65
+        : health >= 50
           ? 'Warning'
           : 'Offline';
 

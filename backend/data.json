@@ -603,6 +603,150 @@
   ],
   "accessRequests": [
     {
+      "id": 48,
+      "vehicleId": "VEH-024",
+      "rsuId": "RSU-08",
+      "timestamp": "00:03:37",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 47,
+      "vehicleId": "VEH-028",
+      "rsuId": "RSU-04",
+      "timestamp": "23:47:31",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 46,
+      "vehicleId": "VEH-034",
+      "rsuId": "RSU-02",
+      "timestamp": "23:47:26",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 45,
+      "vehicleId": "VEH-045",
+      "rsuId": "RSU-05",
+      "timestamp": "23:47:21",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 44,
+      "vehicleId": "VEH-012",
+      "rsuId": "RSU-04",
+      "timestamp": "23:47:21",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 43,
+      "vehicleId": "VEH-040",
+      "rsuId": "RSU-08",
+      "timestamp": "23:47:21",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 42,
+      "vehicleId": "VEH-039",
+      "rsuId": "RSU-07",
+      "timestamp": "23:47:21",
+      "status": "Pending",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 41,
+      "vehicleId": "VEH-004",
+      "rsuId": "RSU-04",
+      "timestamp": "23:47:21",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 40,
+      "vehicleId": "VEH-020",
+      "rsuId": "RSU-04",
+      "timestamp": "23:47:21",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 39,
+      "vehicleId": "VEH-014",
+      "rsuId": "RSU-06",
+      "timestamp": "23:47:20",
+      "status": "Pending",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 38,
+      "vehicleId": "VEH-033",
+      "rsuId": "RSU-01",
+      "timestamp": "23:47:20",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 37,
+      "vehicleId": "VEH-044",
+      "rsuId": "RSU-04",
+      "timestamp": "23:47:20",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 36,
+      "vehicleId": "VEH-015",
+      "rsuId": "RSU-07",
+      "timestamp": "23:47:16",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 35,
+      "vehicleId": "VEH-002",
+      "rsuId": "RSU-02",
+      "timestamp": "23:47:11",
+      "status": "Pending",
+      "reason": "Additional validation required"
+    },
+    {
+      "id": 34,
+      "vehicleId": "VEH-025",
+      "rsuId": "RSU-01",
+      "timestamp": "23:47:06",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 33,
+      "vehicleId": "VEH-028",
+      "rsuId": "RSU-04",
+      "timestamp": "23:46:01",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
+      "id": 32,
+      "vehicleId": "VEH-004",
+      "rsuId": "RSU-04",
+      "timestamp": "23:45:56",
+      "status": "Denied",
+      "reason": "Expired certificate"
+    },
+    {
+      "id": 31,
+      "vehicleId": "VEH-035",
+      "rsuId": "RSU-03",
+      "timestamp": "23:45:51",
+      "status": "Granted",
+      "reason": "Vehicle authenticated successfully"
+    },
+    {
       "id": 1,
       "vehicleId": "VEH-008",
       "rsuId": "RSU-08",
@@ -845,6 +989,24 @@
   ],
   "securityAlerts": [
     {
+      "id": 10,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VEH-024",
+      "rsuId": "RSU-08",
+      "severity": "Critical",
+      "timestamp": "00:03:37",
+      "description": "Vehicle VEH-024 was denied access due to: Expired certificate."
+    },
+    {
+      "id": 9,
+      "title": "Unauthorized Access Attempt",
+      "vehicleId": "VEH-004",
+      "rsuId": "RSU-04",
+      "severity": "Critical",
+      "timestamp": "23:47:21",
+      "description": "Vehicle VEH-004 was denied access again due to: Expired certificate."
+    },
+    {
       "id": 1,
       "title": "Unauthorized Access Attempt",
       "vehicleId": "VEH-036",
@@ -913,8 +1075,8 @@
       "vehicleId": "VEH-040",
       "rsuId": "RSU-08",
       "severity": "Critical",
-      "timestamp": "10:20:00",
-      "description": "Vehicle VEH-040 was denied access due to: Expired certificate."
+      "timestamp": "23:47:21",
+      "description": "Vehicle VEH-040 was denied access again due to: Expired certificate."
     }
   ],
   "rsus": [
